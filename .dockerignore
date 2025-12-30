@@ -1,0 +1,15 @@
+.git
+.gitignore
+.vscode
+.idea
+node_modules
+vendor
+writable/logs/*
+writable/session/*
+writable/uploads/*
+writable/debugbar/*
+.env
+*.log
+README.md
+requirements.md
+
