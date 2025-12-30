@@ -17,6 +17,12 @@ $routes->group('auth', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('register', 'Auth::register');
     $routes->post('register', 'Auth::attemptRegister');
     $routes->get('logout', 'Auth::logout');
+    
+    // OAuth routes
+    $routes->get('google', 'Auth::google');
+    $routes->get('google/callback', 'Auth::googleCallback');
+    $routes->get('facebook', 'Auth::facebook');
+    $routes->get('facebook/callback', 'Auth::facebookCallback');
 });
 
 // Dashboard routes (protected)

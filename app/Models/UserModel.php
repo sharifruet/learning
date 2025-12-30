@@ -20,6 +20,9 @@ class UserModel extends Model
         'last_name',
         'role',
         'email_verified',
+        'provider',
+        'provider_id',
+        'avatar',
     ];
 
     // Dates
@@ -30,9 +33,9 @@ class UserModel extends Model
 
     // Validation
     protected $validationRules      = [
-        'username' => 'required|min_length[3]|max_length[100]|is_unique[users.username]',
+        'username' => 'permit_empty|min_length[3]|max_length[100]|is_unique[users.username]',
         'email'    => 'required|valid_email|is_unique[users.email]',
-        'password' => 'required|min_length[6]',
+        'password' => 'permit_empty|min_length[6]',
     ];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
@@ -51,7 +54,7 @@ class UserModel extends Model
 
     protected function hashPassword(array $data)
     {
-        if (isset($data['data']['password'])) {
+        if (isset($data['data']['password']) && !empty($data['data']['password'])) {
             $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
         }
         return $data;
