@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use App\Libraries\EmailService;
 use Config\OAuth;
 use CodeIgniter\HTTP\Client;
 
@@ -10,11 +11,13 @@ class Auth extends BaseController
 {
     protected $userModel;
     protected $oauthConfig;
+    protected $emailService;
 
     public function __construct()
     {
         $this->userModel = new UserModel();
         $this->oauthConfig = new OAuth();
+        $this->emailService = new EmailService();
     }
 
     public function login()
@@ -50,6 +53,13 @@ class Auth extends BaseController
             return redirect()->back()
                 ->withInput()
                 ->with('error', 'Invalid email or password');
+        }
+
+        // Check email verification (skip for OAuth users)
+        if (empty($user['provider']) && !$user['email_verified']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Please verify your email address before logging in. <a href="' . base_url('auth/resend-verification') . '">Resend verification email</a>');
         }
 
         session()->set([
@@ -91,6 +101,10 @@ class Auth extends BaseController
                 ->with('errors', $this->validator->getErrors());
         }
 
+        // Generate email verification token
+        $verificationToken = bin2hex(random_bytes(32));
+        $verificationExpires = date('Y-m-d H:i:s', strtotime('+24 hours'));
+
         $data = [
             'username'   => $this->request->getPost('username'),
             'email'      => $this->request->getPost('email'),
@@ -98,22 +112,32 @@ class Auth extends BaseController
             'first_name' => $this->request->getPost('first_name'),
             'last_name'  => $this->request->getPost('last_name'),
             'role'       => 'student',
+            'email_verified' => 0,
+            'email_verification_token' => $verificationToken,
+            'email_verification_token_expires' => $verificationExpires,
         ];
 
         $userId = $this->userModel->insert($data);
 
         if ($userId) {
             $user = $this->userModel->find($userId);
-            session()->set([
-                'user_id'    => $user['id'],
-                'username'   => $user['username'],
-                'email'      => $user['email'],
-                'role'       => $user['role'],
-                'first_name' => $user['first_name'],
-            ]);
+            
+            // Send verification email
+            $userName = $user['first_name'] ?: $user['username'];
+            $emailSent = $this->emailService->sendVerificationEmail(
+                $user['email'],
+                $userName,
+                $verificationToken
+            );
 
-            return redirect()->to('/dashboard')
-                ->with('success', 'Registration successful! Welcome to Python Learning Platform.');
+            if (!$emailSent) {
+                // Log email error but don't fail registration
+                log_message('error', 'Failed to send verification email to: ' . $user['email']);
+            }
+
+            // Don't auto-login, require email verification first
+            return redirect()->to('/auth/login')
+                ->with('success', 'Registration successful! Please check your email to verify your account before logging in.');
         }
 
         return redirect()->back()
@@ -125,6 +149,213 @@ class Auth extends BaseController
     {
         session()->destroy();
         return redirect()->to('/auth/login');
+    }
+
+    /**
+     * Verify email address
+     */
+    public function verifyEmail($token)
+    {
+        if (empty($token)) {
+            return redirect()->to('/auth/login')
+                ->with('error', 'Invalid verification token.');
+        }
+
+        $user = $this->userModel
+            ->where('email_verification_token', $token)
+            ->where('email_verification_token_expires >', date('Y-m-d H:i:s'))
+            ->first();
+
+        if (!$user) {
+            return redirect()->to('/auth/login')
+                ->with('error', 'Invalid or expired verification token. Please request a new verification email.');
+        }
+
+        // Verify the email
+        $this->userModel->update($user['id'], [
+            'email_verified' => 1,
+            'email_verification_token' => null,
+            'email_verification_token_expires' => null,
+        ]);
+
+        return redirect()->to('/auth/login')
+            ->with('success', 'Email verified successfully! You can now log in.');
+    }
+
+    /**
+     * Show forgot password form
+     */
+    public function forgotPassword()
+    {
+        if (session()->has('user_id')) {
+            return redirect()->to('/dashboard');
+        }
+
+        return $this->render('auth/forgot_password', []);
+    }
+
+    /**
+     * Process password reset request
+     */
+    public function requestPasswordReset()
+    {
+        $rules = [
+            'email' => 'required|valid_email',
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()
+                ->withInput()
+                ->with('errors', $this->validator->getErrors());
+        }
+
+        $email = $this->request->getPost('email');
+        $user = $this->userModel->where('email', $email)->first();
+
+        // Always show success message for security (don't reveal if email exists)
+        if ($user && empty($user['provider'])) {
+            // Generate password reset token
+            $resetToken = bin2hex(random_bytes(32));
+            $resetExpires = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+            $this->userModel->update($user['id'], [
+                'password_reset_token' => $resetToken,
+                'password_reset_token_expires' => $resetExpires,
+            ]);
+
+            // Send password reset email
+            $userName = $user['first_name'] ?: $user['username'];
+            $this->emailService->sendPasswordResetEmail(
+                $user['email'],
+                $userName,
+                $resetToken
+            );
+        }
+
+        return redirect()->to('/auth/login')
+            ->with('success', 'If an account exists with that email, a password reset link has been sent.');
+    }
+
+    /**
+     * Show reset password form
+     */
+    public function resetPassword($token)
+    {
+        if (session()->has('user_id')) {
+            return redirect()->to('/dashboard');
+        }
+
+        if (empty($token)) {
+            return redirect()->to('/auth/login')
+                ->with('error', 'Invalid reset token.');
+        }
+
+        $user = $this->userModel
+            ->where('password_reset_token', $token)
+            ->where('password_reset_token_expires >', date('Y-m-d H:i:s'))
+            ->first();
+
+        if (!$user) {
+            return redirect()->to('/auth/login')
+                ->with('error', 'Invalid or expired reset token.');
+        }
+
+        return $this->render('auth/reset_password', ['token' => $token]);
+    }
+
+    /**
+     * Process password reset
+     */
+    public function processPasswordReset()
+    {
+        $rules = [
+            'token' => 'required',
+            'password' => 'required|min_length[6]',
+            'confirm_password' => 'required|matches[password]',
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()
+                ->withInput()
+                ->with('errors', $this->validator->getErrors());
+        }
+
+        $token = $this->request->getPost('token');
+        $password = $this->request->getPost('password');
+
+        $user = $this->userModel
+            ->where('password_reset_token', $token)
+            ->where('password_reset_token_expires >', date('Y-m-d H:i:s'))
+            ->first();
+
+        if (!$user) {
+            return redirect()->to('/auth/login')
+                ->with('error', 'Invalid or expired reset token.');
+        }
+
+        // Update password and clear reset token
+        $this->userModel->update($user['id'], [
+            'password' => $password,
+            'password_reset_token' => null,
+            'password_reset_token_expires' => null,
+        ]);
+
+        return redirect()->to('/auth/login')
+            ->with('success', 'Password reset successfully! You can now log in with your new password.');
+    }
+
+    /**
+     * Resend verification email
+     */
+    public function resendVerification()
+    {
+        if (session()->has('user_id')) {
+            return redirect()->to('/dashboard');
+        }
+
+        return $this->render('auth/resend_verification', []);
+    }
+
+    /**
+     * Process resend verification request
+     */
+    public function processResendVerification()
+    {
+        $rules = [
+            'email' => 'required|valid_email',
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()
+                ->withInput()
+                ->with('errors', $this->validator->getErrors());
+        }
+
+        $email = $this->request->getPost('email');
+        $user = $this->userModel->where('email', $email)->first();
+
+        // Always show success message for security
+        if ($user && !$user['email_verified'] && empty($user['provider'])) {
+            // Generate new verification token
+            $verificationToken = bin2hex(random_bytes(32));
+            $verificationExpires = date('Y-m-d H:i:s', strtotime('+24 hours'));
+
+            $this->userModel->update($user['id'], [
+                'email_verification_token' => $verificationToken,
+                'email_verification_token_expires' => $verificationExpires,
+            ]);
+
+            // Send verification email
+            $userName = $user['first_name'] ?: $user['username'];
+            $this->emailService->sendVerificationEmail(
+                $user['email'],
+                $userName,
+                $verificationToken
+            );
+        }
+
+        return redirect()->to('/auth/login')
+            ->with('success', 'If an account exists with that email and is not verified, a verification email has been sent.');
     }
 
     /**

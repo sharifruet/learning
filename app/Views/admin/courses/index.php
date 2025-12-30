@@ -43,6 +43,9 @@
                                     <td><?= $course['sort_order'] ?></td>
                                     <td class="text-end pe-4">
                                         <div class="btn-group" role="group">
+                                            <a href="<?= base_url('admin/courses/' . $course['id'] . '/modules') ?>" class="btn btn-sm btn-outline-success" title="Manage Modules">
+                                                <i class="bi bi-folder"></i> Modules
+                                            </a>
                                             <a href="<?= base_url('admin/courses/' . $course['id'] . '/edit') ?>" class="btn btn-sm btn-outline-primary">
                                                 <i class="bi bi-pencil"></i> Edit
                                             </a>

@@ -16,13 +16,35 @@ class AuthFilter implements FilterInterface
             return redirect()->to('/auth/login');
         }
         
-        // Check for admin role if required
-        if (isset($arguments) && in_array('admin', $arguments)) {
+        // Check role-based access if arguments are provided
+        if (!empty($arguments)) {
             $userModel = new \App\Models\UserModel();
             $user = $userModel->find($session->get('user_id'));
             
-            if (!$user || $user['role'] !== 'admin') {
-                return redirect()->to('/dashboard');
+            if (!$user) {
+                $session->destroy();
+                return redirect()->to('/auth/login');
+            }
+            
+            $userRole = $user['role'];
+            
+            // Check for specific role requirements
+            foreach ($arguments as $requiredRole) {
+                if ($requiredRole === 'admin' && $userRole !== 'admin') {
+                    return redirect()->to('/dashboard')
+                        ->with('error', 'Access denied. Administrator privileges required.');
+                }
+                
+                // Allow both instructor and admin for instructor routes
+                if ($requiredRole === 'instructor' && !in_array($userRole, ['instructor', 'admin'])) {
+                    return redirect()->to('/dashboard')
+                        ->with('error', 'Access denied. Instructor privileges required.');
+                }
+                
+                if ($requiredRole === 'student' && !in_array($userRole, ['student', 'instructor', 'admin'])) {
+                    return redirect()->to('/dashboard')
+                        ->with('error', 'Access denied.');
+                }
             }
         }
     }

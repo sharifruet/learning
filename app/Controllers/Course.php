@@ -5,13 +5,32 @@ namespace App\Controllers;
 use App\Models\CourseModel;
 use App\Models\ModuleModel;
 use App\Models\UserProgressModel;
+use App\Models\EnrollmentModel;
+use App\Models\CourseCategoryModel;
 
 class Course extends BaseController
 {
     public function index()
     {
         $courseModel = new CourseModel();
-        $data['courses'] = $courseModel->getPublishedCourses();
+        $categoryModel = new CourseCategoryModel();
+        
+        // Get filters from request
+        $filters = [
+            'search' => $this->request->getGet('search'),
+            'category_id' => $this->request->getGet('category'),
+            'difficulty' => $this->request->getGet('difficulty'),
+            'enrollment_type' => 'open', // Default: show open enrollment courses
+        ];
+        
+        // Remove empty filters
+        $filters = array_filter($filters, function($value) {
+            return $value !== null && $value !== '';
+        });
+        
+        $data['courses'] = $courseModel->getPublishedCourses($filters);
+        $data['categories'] = $categoryModel->getAllCategories();
+        $data['current_filters'] = $filters;
         
         return $this->render('courses/index', $data);
     }
@@ -19,23 +38,59 @@ class Course extends BaseController
     public function view($courseId)
     {
         $courseModel = new CourseModel();
-        $course = $courseModel->getCourseWithModules($courseId);
+        $enrollmentModel = new EnrollmentModel();
         
-        if (!$course) {
+        $course = $courseModel->getCourseWithDetails($courseId);
+        
+        if (!$course || $course['status'] !== 'published') {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
         
         $userId = session()->get('user_id');
-        $progressModel = new UserProgressModel();
+        $isEnrolled = false;
+        $enrollment = null;
         
-        // Get user progress for this course
-        $courseProgress = $progressModel->where('user_id', $userId)
-                                        ->where('course_id', $courseId)
-                                        ->where('status', 'completed')
-                                        ->countAllResults();
+        if ($userId) {
+            $isEnrolled = $enrollmentModel->isEnrolled($userId, $courseId);
+            if ($isEnrolled) {
+                $enrollment = $enrollmentModel->getEnrollmentWithCourse($userId, $courseId);
+            }
+        }
+        
+        // Get enrollment count
+        $enrollmentCount = $enrollmentModel->getCourseEnrollmentCount($courseId);
+        
+        // Get user progress if enrolled
+        $progress = null;
+        if ($isEnrolled && $enrollment) {
+            $progressModel = new UserProgressModel();
+            $completedLessons = $progressModel->where('user_id', $userId)
+                                            ->where('course_id', $courseId)
+                                            ->where('status', 'completed')
+                                            ->countAllResults();
+            
+            // Calculate progress percentage (simplified - will be enhanced in Phase 1.4)
+            $totalLessons = 0;
+            if (!empty($course['modules'])) {
+                foreach ($course['modules'] as $module) {
+                    if (isset($module['lessons'])) {
+                        $totalLessons += count($module['lessons']);
+                    }
+                }
+            }
+            
+            $progress = [
+                'completed' => $completedLessons,
+                'total' => $totalLessons,
+                'percentage' => $totalLessons > 0 ? round(($completedLessons / $totalLessons) * 100, 2) : 0,
+            ];
+        }
         
         $data['course'] = $course;
-        $data['progress'] = $courseProgress;
+        $data['isEnrolled'] = $isEnrolled;
+        $data['enrollment'] = $enrollment;
+        $data['enrollmentCount'] = $enrollmentCount;
+        $data['progress'] = $progress;
         
         return $this->render('courses/view', $data);
     }

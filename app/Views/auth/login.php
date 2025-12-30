@@ -17,11 +17,16 @@
                         </label>
                         <input type="email" class="form-control form-control-lg" id="email" name="email" value="<?= old('email') ?>" placeholder="you@example.com" required>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <label for="password" class="form-label fw-semibold">
                             <i class="bi bi-lock me-2"></i>Password
                         </label>
                         <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    <div class="mb-4 text-end">
+                        <a href="<?= base_url('auth/forgot-password') ?>" class="text-decoration-none small">
+                            <i class="bi bi-question-circle me-1"></i>Forgot Password?
+                        </a>
                     </div>
                     <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
                         <i class="bi bi-box-arrow-in-right me-2"></i>Sign In

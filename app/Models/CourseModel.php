@@ -20,6 +20,14 @@ class CourseModel extends Model
         'difficulty',
         'status',
         'sort_order',
+        'category_id',
+        'instructor_id',
+        'enrollment_type',
+        'is_free',
+        'is_self_paced',
+        'capacity',
+        'syllabus',
+        'tags',
     ];
 
     protected $useTimestamps = true;
@@ -32,11 +40,82 @@ class CourseModel extends Model
         'slug'  => 'required|is_unique[courses.slug]',
     ];
 
-    public function getPublishedCourses()
+    public function getPublishedCourses(array $filters = [])
     {
-        return $this->where('status', 'published')
-                    ->orderBy('sort_order', 'ASC')
-                    ->findAll();
+        $builder = $this->where('status', 'published');
+
+        // Filter by category
+        if (!empty($filters['category_id'])) {
+            $builder->where('category_id', $filters['category_id']);
+        }
+
+        // Filter by difficulty
+        if (!empty($filters['difficulty'])) {
+            $builder->where('difficulty', $filters['difficulty']);
+        }
+
+        // Search by title or description
+        if (!empty($filters['search'])) {
+            $search = $filters['search'];
+            $builder->groupStart()
+                   ->like('title', $search)
+                   ->orLike('description', $search)
+                   ->orLike('tags', $search)
+                   ->groupEnd();
+        }
+
+        // Filter by enrollment type (default: open)
+        if (isset($filters['enrollment_type'])) {
+            $builder->where('enrollment_type', $filters['enrollment_type']);
+        } else {
+            // Default: show open enrollment courses
+            $builder->where('enrollment_type', 'open');
+        }
+
+        return $builder->orderBy('sort_order', 'ASC')
+                      ->orderBy('created_at', 'DESC')
+                      ->findAll();
+    }
+
+    /**
+     * Get course with instructor and category info
+     */
+    public function getCourseWithDetails($courseId)
+    {
+        $course = $this->find($courseId);
+        if (!$course) {
+            return null;
+        }
+
+        // Get instructor info
+        if (!empty($course['instructor_id'])) {
+            $userModel = new \App\Models\UserModel();
+            $course['instructor'] = $userModel->find($course['instructor_id']);
+        }
+
+        // Get category info
+        if (!empty($course['category_id'])) {
+            $categoryModel = new \App\Models\CourseCategoryModel();
+            $course['category'] = $categoryModel->find($course['category_id']);
+        }
+
+        // Get modules with lessons
+        $moduleModel = new ModuleModel();
+        $modules = $moduleModel->where('course_id', $courseId)
+                              ->orderBy('sort_order', 'ASC')
+                              ->findAll();
+        
+        // Load lessons for each module
+        $lessonModel = new \App\Models\LessonModel();
+        foreach ($modules as &$module) {
+            $module['lessons'] = $lessonModel->where('module_id', $module['id'])
+                                           ->orderBy('sort_order', 'ASC')
+                                           ->findAll();
+        }
+        
+        $course['modules'] = $modules;
+
+        return $course;
     }
 
     public function getCourseWithModules($courseId)

@@ -20,6 +20,11 @@ class LessonModel extends Model
         'content',
         'code_examples',
         'sort_order',
+        'status',
+        'content_type',
+        'featured_image',
+        'estimated_time',
+        'objectives',
     ];
 
     protected $useTimestamps = true;
@@ -34,12 +39,35 @@ class LessonModel extends Model
             return null;
         }
 
+        // Only show published lessons to students (unless admin/instructor)
+        $userRole = session()->get('role');
+        if (!in_array($userRole, ['admin', 'instructor'])) {
+            if (($lesson['status'] ?? 'draft') !== 'published') {
+                return null;
+            }
+        }
+
         $exerciseModel = new ExerciseModel();
         $lesson['exercises'] = $exerciseModel->where('lesson_id', $lessonId)
                                              ->orderBy('sort_order', 'ASC')
                                              ->findAll();
 
+        // Get lesson content blocks
+        $lessonContentModel = new \App\Models\LessonContentModel();
+        $lesson['content_blocks'] = $lessonContentModel->getLessonContent($lessonId);
+
         return $lesson;
+    }
+
+    /**
+     * Get published lessons for a module
+     */
+    public function getPublishedLessons(int $moduleId)
+    {
+        return $this->where('module_id', $moduleId)
+                   ->where('status', 'published')
+                   ->orderBy('sort_order', 'ASC')
+                   ->findAll();
     }
 }
 

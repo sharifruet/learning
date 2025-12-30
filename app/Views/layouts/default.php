@@ -44,11 +44,28 @@
                                 <i class="bi bi-speedometer2"></i> Dashboard
                             </a>
                         </li>
-                        <?php if (session()->get('role') === 'admin'): ?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= base_url('admin') ?>">
-                                    <i class="bi bi-gear"></i> Admin
+                        <?php if (in_array(session()->get('role'), ['admin', 'instructor'])): ?>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-gear"></i> 
+                                    <?php if (session()->get('role') === 'admin'): ?>
+                                        Admin
+                                    <?php else: ?>
+                                        Instructor
+                                    <?php endif; ?>
                                 </a>
+                                <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                                    <?php if (session()->get('role') === 'admin'): ?>
+                                        <li><a class="dropdown-item" href="<?= base_url('admin') ?>"><i class="bi bi-speedometer2"></i> Admin Dashboard</a></li>
+                                        <li><a class="dropdown-item" href="<?= base_url('admin/users') ?>"><i class="bi bi-people"></i> Manage Users</a></li>
+                                    <?php endif; ?>
+                                    <?php if (session()->get('role') === 'instructor'): ?>
+                                        <li><a class="dropdown-item" href="<?= base_url('instructor') ?>"><i class="bi bi-speedometer2"></i> Instructor Dashboard</a></li>
+                                    <?php endif; ?>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="<?= base_url('admin/courses') ?>"><i class="bi bi-book"></i> Manage Courses</a></li>
+                                    <li><a class="dropdown-item" href="<?= base_url('admin/courses/create') ?>"><i class="bi bi-plus-circle"></i> Create Course</a></li>
+                                </ul>
                             </li>
                         <?php endif; ?>
                     <?php endif; ?>
