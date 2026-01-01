@@ -35,7 +35,7 @@ class Filters extends BaseConfig
             // 'invalidchars',
         ],
         'after' => [
-            'toolbar',
+            // 'toolbar', // Disabled to remove CodeIgniter logo
             // 'honeypot',
             // 'secureheaders',
         ],

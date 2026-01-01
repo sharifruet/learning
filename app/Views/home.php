@@ -1,72 +1,99 @@
-<!-- Hero Section with Modern Design -->
-<section class="hero-modern fade-in-up">
-    <div class="container">
-        <div class="row align-items-center min-vh-75">
-            <div class="col-lg-6">
+<!-- Hero Section with Enhanced Design -->
+<section class="hero-section">
+    <div class="hero-background">
+        <div class="hero-gradient"></div>
+        <div class="hero-pattern"></div>
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+    </div>
+    <div class="container position-relative">
+        <div class="row align-items-center min-vh-80">
+            <div class="col-lg-6 col-xl-5">
                 <div class="hero-content">
-                    <div class="badge-hero mb-4">
-                        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2">
-                            <i class="bi bi-star-fill me-2"></i>Start Learning Today
-                        </span>
+                    <div class="app-name-hero mb-4 fade-in-up">
+                        <img src="<?= base_url('logo.png') ?>" alt="Bandhanhara Learning" class="hero-logo" style="max-height: 120px; width: auto;">
+                        <h2 class="ms-3 mb-0 text-white" style="font-size: 2.5rem; font-weight: 700;">Bandhanhara Learning</h2>
                     </div>
-                    <h1 class="hero-title mb-4">
-                        Master Python Programming
-                        <span class="text-gradient d-block mt-2">From Zero to Hero</span>
+                    <h1 class="hero-title mb-3 fade-in-up" style="animation-delay: 0.2s">
+                        Learn Anything,
+                        <span class="text-gradient-advanced">Anytime, Anywhere</span>
                     </h1>
-                    <p class="hero-description mb-4">
-                        Learn Python with interactive lessons, hands-on coding exercises, and real-world projects. 
-                        Build your skills step-by-step with our comprehensive curriculum designed for all levels.
+                    <p class="hero-description mb-4 fade-in-up" style="animation-delay: 0.2s">
+                        Master any subject with our comprehensive, interactive courses. From programming to business, 
+                        arts to sciences—learn at your own pace with expert-designed content.
                     </p>
-                    <div class="hero-stats mb-4">
-                        <div class="stat-item">
-                            <div class="stat-number"><?= $courseCount > 0 ? $courseCount : '10+' ?></div>
-                            <div class="stat-label">Courses</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number"><?= $totalLessons > 0 ? $totalLessons : '50+' ?></div>
-                            <div class="stat-label">Lessons</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">100%</div>
-                            <div class="stat-label">Free</div>
-                        </div>
-                    </div>
-                    <div class="hero-actions d-flex gap-3 flex-wrap">
-                        <?php if (!session()->has('user_id')): ?>
-                            <a href="<?= base_url('auth/register') ?>" class="btn btn-hero-primary btn-lg">
-                                <i class="bi bi-rocket-takeoff me-2"></i>Get Started Free
-                            </a>
-                            <a href="<?= base_url('courses') ?>" class="btn btn-hero-outline btn-lg">
-                                <i class="bi bi-play-circle me-2"></i>Watch Demo
-                            </a>
-                        <?php else: ?>
-                            <a href="<?= base_url('courses') ?>" class="btn btn-hero-primary btn-lg">
-                                <i class="bi bi-book me-2"></i>Browse Courses
-                            </a>
-                            <a href="<?= base_url('dashboard') ?>" class="btn btn-hero-outline btn-lg">
-                                <i class="bi bi-speedometer2 me-2"></i>My Dashboard
-                            </a>
-                        <?php endif; ?>
-                    </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="hero-visual">
-                    <div class="code-preview">
-                        <div class="code-header">
-                            <div class="code-dots">
-                                <span></span><span></span><span></span>
+            <div class="col-lg-6 col-xl-7">
+                <div class="hero-visual-modern fade-in-up" style="animation-delay: 0.3s">
+                    <div class="visual-container">
+                        <div class="floating-card card-1">
+                            <div class="card-icon">
+                                <i class="bi bi-code-slash"></i>
                             </div>
-                            <span class="code-title">python_learning.py</span>
+                            <div class="card-content">
+                                <h6>Interactive Coding</h6>
+                                <p>Practice with real-time feedback</p>
+                            </div>
                         </div>
-                        <div class="code-body">
-                            <pre><code><span class="code-keyword">def</span> <span class="code-function">learn_python</span>():
-    <span class="code-string">"""Start your Python journey"""</span>
-    <span class="code-keyword">print</span>(<span class="code-string">"Hello, Python!"</span>)
-    <span class="code-keyword">return</span> <span class="code-string">"Success"</span>
-
-<span class="code-comment"># Join thousands of learners</span>
-result = learn_python()</code></pre>
+                        <div class="floating-card card-2">
+                            <div class="card-icon">
+                                <i class="bi bi-graph-up"></i>
+                            </div>
+                            <div class="card-content">
+                                <h6>Track Progress</h6>
+                                <p>Monitor your learning journey</p>
+                            </div>
+                        </div>
+                        <div class="floating-card card-3">
+                            <div class="card-icon">
+                                <i class="bi bi-trophy"></i>
+                            </div>
+                            <div class="card-content">
+                                <h6>Earn Certificates</h6>
+                                <p>Showcase your achievements</p>
+                            </div>
+                        </div>
+                        <div class="main-visual">
+                            <div class="code-window">
+                                <div class="window-header">
+                                    <div class="window-controls">
+                                        <span class="control-dot red"></span>
+                                        <span class="control-dot yellow"></span>
+                                        <span class="control-dot green"></span>
+                                    </div>
+                                    <span class="window-title">learning.py</span>
+                                </div>
+                                <div class="window-body">
+                                    <div class="code-line">
+                                        <span class="line-number">1</span>
+                                        <span class="code-text"><span class="keyword">def</span> <span class="function">start_learning</span>():</span>
+                                    </div>
+                                    <div class="code-line">
+                                        <span class="line-number">2</span>
+                                        <span class="code-text">    <span class="keyword">print</span>(<span class="string">"Welcome to Learning!"</span>)</span>
+                                    </div>
+                                    <div class="code-line">
+                                        <span class="line-number">3</span>
+                                        <span class="code-text">    <span class="keyword">return</span> <span class="string">"Success"</span></span>
+                                    </div>
+                                    <div class="code-line">
+                                        <span class="line-number">4</span>
+                                        <span class="code-text"></span>
+                                    </div>
+                                    <div class="code-line">
+                                        <span class="line-number">5</span>
+                                        <span class="code-text"><span class="comment"># Start your journey today</span></span>
+                                    </div>
+                                    <div class="code-line">
+                                        <span class="line-number">6</span>
+                                        <span class="code-text">result = <span class="function">start_learning</span>()</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -75,151 +102,50 @@ result = learn_python()</code></pre>
     </div>
 </section>
 
-<!-- Features Section with Modern Cards -->
-<section class="features-section py-5">
-    <div class="container">
-        <div class="section-header text-center mb-5 fade-in-up">
-            <span class="section-badge">Why Choose Us</span>
-            <h2 class="section-title mt-3 mb-3">
-                Everything You Need to <span class="text-gradient">Master Python</span>
-            </h2>
-            <p class="section-description">A comprehensive learning platform designed to take you from beginner to expert</p>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-4 fade-in-up" style="animation-delay: 0.1s">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="bi bi-code-square"></i>
-                    </div>
-                    <h4 class="feature-title">Interactive Learning</h4>
-                    <p class="feature-description">
-                        Learn by doing with hands-on coding exercises, real-time feedback, and interactive code editors.
-                    </p>
-                    <div class="feature-link">
-                        <a href="#" class="text-primary text-decoration-none">
-                            Learn more <i class="bi bi-arrow-right ms-1"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 fade-in-up" style="animation-delay: 0.2s">
-                <div class="feature-card">
-                    <div class="feature-icon bg-success bg-opacity-10 text-success">
-                        <i class="bi bi-graph-up-arrow"></i>
-                    </div>
-                    <h4 class="feature-title">Track Progress</h4>
-                    <p class="feature-description">
-                        Monitor your learning journey with detailed progress tracking, achievements, and personalized insights.
-                    </p>
-                    <div class="feature-link">
-                        <a href="#" class="text-success text-decoration-none">
-                            Learn more <i class="bi bi-arrow-right ms-1"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 fade-in-up" style="animation-delay: 0.3s">
-                <div class="feature-card">
-                    <div class="feature-icon bg-warning bg-opacity-10 text-warning">
-                        <i class="bi bi-trophy"></i>
-                    </div>
-                    <h4 class="feature-title">Real Projects</h4>
-                    <p class="feature-description">
-                        Build practical projects that showcase your Python skills and prepare you for real-world challenges.
-                    </p>
-                    <div class="feature-link">
-                        <a href="#" class="text-warning text-decoration-none">
-                            Learn more <i class="bi bi-arrow-right ms-1"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Statistics Section -->
-<?php if ($courseCount > 0 || $totalModules > 0 || $totalLessons > 0): ?>
-<section class="stats-section py-5">
-    <div class="container">
-        <div class="stats-card fade-in-up">
-            <div class="row g-4 text-center">
-                <?php if ($courseCount > 0): ?>
-                <div class="col-md-4">
-                    <div class="stat-box">
-                        <div class="stat-icon">
-                            <i class="bi bi-book"></i>
-                        </div>
-                        <div class="stat-value"><?= $courseCount ?></div>
-                        <div class="stat-label"><?= $courseCount === 1 ? 'Course' : 'Courses' ?></div>
-                    </div>
-                </div>
-                <?php endif; ?>
-                <?php if ($totalModules > 0): ?>
-                <div class="col-md-4">
-                    <div class="stat-box">
-                        <div class="stat-icon">
-                            <i class="bi bi-folder"></i>
-                        </div>
-                        <div class="stat-value"><?= $totalModules ?></div>
-                        <div class="stat-label"><?= $totalModules === 1 ? 'Module' : 'Modules' ?></div>
-                    </div>
-                </div>
-                <?php endif; ?>
-                <?php if ($totalLessons > 0): ?>
-                <div class="col-md-4">
-                    <div class="stat-box">
-                        <div class="stat-icon">
-                            <i class="bi bi-file-text"></i>
-                        </div>
-                        <div class="stat-value"><?= $totalLessons ?></div>
-                        <div class="stat-label"><?= $totalLessons === 1 ? 'Lesson' : 'Lessons' ?></div>
-                    </div>
-                </div>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
-</section>
-<?php endif; ?>
-
-<!-- Courses Section -->
+<!-- Courses Section Enhanced -->
 <?php if (!empty($courses)): ?>
-<section class="courses-section py-5">
+<section class="courses-section-modern py-4">
     <div class="container">
-        <div class="section-header mb-5 fade-in-up">
+        <div class="section-header-modern mb-3">
             <div class="d-flex justify-content-between align-items-center flex-wrap">
                 <div>
-                    <span class="section-badge">Our Courses</span>
-                    <h2 class="section-title mt-3 mb-2">
-                        Start Learning <span class="text-gradient">Today</span>
+                    <span class="section-badge-modern">Our Courses</span>
+                    <h2 class="section-title-modern mt-2 mb-2">
+                        Start Learning <span class="text-gradient-advanced">Today</span>
                     </h2>
-                    <p class="section-description mb-0">Choose from our comprehensive Python courses</p>
+                    <p class="section-description-modern mb-0">Choose from our comprehensive courses on any subject</p>
                 </div>
                 <?php if (count($courses) > 3): ?>
-                    <a href="<?= base_url('courses') ?>" class="btn btn-outline-primary mt-3">
+                    <a href="<?= base_url('courses') ?>" class="btn btn-view-all">
                         View All Courses <i class="bi bi-arrow-right ms-2"></i>
                     </a>
                 <?php endif; ?>
             </div>
         </div>
-        <div class="row g-4">
+        <div class="row g-4 justify-content-center">
             <?php foreach ($featuredCourses as $index => $course): ?>
-                <div class="col-md-4 fade-in-up" style="animation-delay: <?= ($index + 1) * 0.1 ?>s">
-                    <div class="course-card-modern">
-                        <div class="course-image-modern">
-                            <div class="course-overlay">
-                                <span class="badge-difficulty bg-<?= $course['difficulty'] === 'beginner' ? 'success' : ($course['difficulty'] === 'intermediate' ? 'warning' : 'danger') ?>">
+                <div class="col-sm-6 col-md-6 col-lg-4 mb-4">
+                    <div class="course-card-enhanced">
+                        <div class="course-image-enhanced">
+                            <div class="course-overlay-enhanced">
+                                <span class="badge-difficulty-enhanced bg-<?= $course['difficulty'] === 'beginner' ? 'success' : ($course['difficulty'] === 'intermediate' ? 'warning' : 'danger') ?>">
                                     <?= ucfirst($course['difficulty']) ?>
                                 </span>
                             </div>
-                            <i class="bi bi-filetype-py"></i>
+                            <div class="course-icon-large">
+                                <i class="bi bi-filetype-py"></i>
+                            </div>
+                            <div class="course-gradient-overlay"></div>
                         </div>
-                        <div class="course-content">
-                            <h5 class="course-title"><?= esc($course['title']) ?></h5>
-                            <p class="course-description"><?= esc($course['description']) ?></p>
-                            <div class="course-footer">
-                                <a href="<?= base_url('courses/' . $course['id']) ?>" class="btn btn-course">
+                        <div class="course-content-enhanced">
+                            <h5 class="course-title-enhanced"><?= esc($course['title']) ?></h5>
+                            <p class="course-description-enhanced"><?php 
+                                $description = $course['description'] ?? '';
+                                $description = mb_strlen($description) > 120 ? mb_substr($description, 0, 120) . '...' : $description;
+                                echo esc($description);
+                            ?></p>
+                            <div class="course-footer-enhanced">
+                                <a href="<?= base_url('courses/' . $course['slug']) ?>" class="btn btn-course-enhanced">
                                     Start Learning <i class="bi bi-arrow-right ms-2"></i>
                                 </a>
                             </div>
@@ -230,296 +156,385 @@ result = learn_python()</code></pre>
         </div>
     </div>
 </section>
-<?php else: ?>
-<!-- Coming Soon Section -->
-<section class="courses-section py-5">
-    <div class="container">
-        <div class="section-header text-center mb-5 fade-in-up">
-            <span class="section-badge">Coming Soon</span>
-            <h2 class="section-title mt-3 mb-3">
-                Exciting Courses <span class="text-gradient">On The Way</span>
-            </h2>
-            <p class="section-description">We're preparing amazing Python courses for you!</p>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-4 fade-in-up" style="animation-delay: 0.1s">
-                <div class="course-card-modern coming-soon">
-                    <div class="course-image-modern">
-                        <div class="course-overlay">
-                            <span class="badge-difficulty bg-success">Beginner</span>
-                        </div>
-                        <i class="bi bi-filetype-py"></i>
-                    </div>
-                    <div class="course-content">
-                        <h5 class="course-title">Python Basics</h5>
-                        <p class="course-description">
-                            Learn the fundamentals of Python programming, including variables, data types, 
-                            control structures, and basic operations.
-                        </p>
-                        <div class="course-footer">
-                            <button class="btn btn-course" disabled>
-                                <i class="bi bi-clock me-2"></i>Coming Soon
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 fade-in-up" style="animation-delay: 0.2s">
-                <div class="course-card-modern coming-soon">
-                    <div class="course-image-modern">
-                        <div class="course-overlay">
-                            <span class="badge-difficulty bg-warning">Intermediate</span>
-                        </div>
-                        <i class="bi bi-filetype-py"></i>
-                    </div>
-                    <div class="course-content">
-                        <h5 class="course-title">Python Advanced</h5>
-                        <p class="course-description">
-                            Dive deeper into Python with advanced topics like decorators, generators, 
-                            object-oriented programming, and design patterns.
-                        </p>
-                        <div class="course-footer">
-                            <button class="btn btn-course" disabled>
-                                <i class="bi bi-clock me-2"></i>Coming Soon
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 fade-in-up" style="animation-delay: 0.3s">
-                <div class="course-card-modern coming-soon">
-                    <div class="course-image-modern">
-                        <div class="course-overlay">
-                            <span class="badge-difficulty bg-danger">Advanced</span>
-                        </div>
-                        <i class="bi bi-filetype-py"></i>
-                    </div>
-                    <div class="course-content">
-                        <h5 class="course-title">Python Projects</h5>
-                        <p class="course-description">
-                            Build real-world applications and projects to showcase your Python programming 
-                            expertise and prepare for professional development.
-                        </p>
-                        <div class="course-footer">
-                            <button class="btn btn-course" disabled>
-                                <i class="bi bi-clock me-2"></i>Coming Soon
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 <?php endif; ?>
 
-<!-- How It Works Section -->
-<section class="how-it-works-section py-5 bg-light">
-    <div class="container">
-        <div class="section-header text-center mb-5 fade-in-up">
-            <span class="section-badge">Simple Process</span>
-            <h2 class="section-title mt-3 mb-3">
-                How It <span class="text-gradient">Works</span>
-            </h2>
-            <p class="section-description">Get started in just a few simple steps</p>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-3 col-sm-6 fade-in-up" style="animation-delay: 0.1s">
-                <div class="step-card">
-                    <div class="step-number">01</div>
-                    <div class="step-icon">
-                        <i class="bi bi-person-plus"></i>
-                    </div>
-                    <h5 class="step-title">Sign Up</h5>
-                    <p class="step-description">Create your free account in seconds with email or social login</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 fade-in-up" style="animation-delay: 0.2s">
-                <div class="step-card">
-                    <div class="step-number">02</div>
-                    <div class="step-icon">
-                        <i class="bi bi-book"></i>
-                    </div>
-                    <h5 class="step-title">Choose Course</h5>
-                    <p class="step-description">Browse our Python courses and pick one that matches your skill level</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 fade-in-up" style="animation-delay: 0.3s">
-                <div class="step-card">
-                    <div class="step-number">03</div>
-                    <div class="step-icon">
-                        <i class="bi bi-code-slash"></i>
-                    </div>
-                    <h5 class="step-title">Learn & Practice</h5>
-                    <p class="step-description">Follow interactive lessons and complete hands-on coding exercises</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 fade-in-up" style="animation-delay: 0.4s">
-                <div class="step-card">
-                    <div class="step-number">04</div>
-                    <div class="step-icon">
-                        <i class="bi bi-rocket-takeoff"></i>
-                    </div>
-                    <h5 class="step-title">Build Projects</h5>
-                    <p class="step-description">Apply your knowledge by building real-world Python projects</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Call to Action Section -->
-<?php if (!session()->has('user_id')): ?>
-<section class="cta-section py-5">
-    <div class="container">
-        <div class="cta-card fade-in-up">
-            <div class="row align-items-center">
-                <div class="col-lg-8 text-center text-lg-start">
-                    <h2 class="cta-title mb-3">Ready to Start Your Python Journey?</h2>
-                    <p class="cta-description mb-0">
-                        Join thousands of learners mastering Python programming. Start learning today for free!
-                    </p>
-                </div>
-                <div class="col-lg-4 text-center text-lg-end mt-4 mt-lg-0">
-                    <a href="<?= base_url('auth/register') ?>" class="btn btn-cta-primary btn-lg me-2 mb-2">
-                        <i class="bi bi-rocket-takeoff me-2"></i>Get Started Free
-                    </a>
-                    <a href="<?= base_url('courses') ?>" class="btn btn-cta-outline btn-lg mb-2">
-                        <i class="bi bi-book me-2"></i>Explore Courses
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<?php endif; ?>
 
 <style>
-/* Hero Section Styles */
-.hero-modern {
-    padding: 4rem 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    position: relative;
-    overflow: hidden;
-    margin: -2rem -15px 4rem -15px;
-    padding: 6rem 2rem;
+/* Global font override for home page - must be very specific */
+html, body, *,
+.hero-section, .hero-content, .hero-title, .hero-description,
+.app-name-hero, .app-name-title,
+.courses-section-modern, .course-card-enhanced, .course-title-enhanced, .course-description-enhanced,
+.section-header-modern, .section-title-modern, .section-badge-modern,
+.btn, .btn, .btn-hero-primary-modern, .btn-course-enhanced,
+h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, select, label {
+    font-family: Verdana, Tahoma, Arial, sans-serif !important;
 }
 
-.hero-modern::before {
-    content: '';
+/* Hero Section Enhanced */
+.hero-section {
+    position: relative;
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    padding: 4rem 0;
+    overflow: hidden;
+    margin: -2rem -15px 2rem -15px;
+}
+
+.hero-background {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.3;
+    z-index: 0;
 }
 
-.hero-modern .container {
-    position: relative;
-    z-index: 1;
+.hero-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #0E9C92 0%, #0B7A73 50%, #14B8AA 100%);
+    opacity: 0.95;
 }
 
-.min-vh-75 {
-    min-height: 75vh;
+.hero-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+}
+
+.floating-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    animation: float 20s infinite ease-in-out;
+}
+
+.shape-1 {
+    width: 300px;
+    height: 300px;
+    top: -150px;
+    right: -150px;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 200px;
+    height: 200px;
+    bottom: -100px;
+    left: -100px;
+    animation-delay: 5s;
+}
+
+.shape-3 {
+    width: 150px;
+    height: 150px;
+    top: 50%;
+    right: 10%;
+    animation-delay: 10s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(30px, -30px) rotate(120deg); }
+    66% { transform: translate(-20px, 20px) rotate(240deg); }
 }
 
 .hero-content {
+    position: relative;
+    z-index: 2;
     color: white;
+}
+
+.app-name-hero {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.hero-logo {
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    transition: transform 0.3s ease;
+}
+
+.hero-logo:hover {
+    transform: scale(1.05);
+}
+
+.app-name-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hero-badge {
+    display: inline-block;
+}
+
+.badge-pulse {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
 }
 
 .hero-title {
-    font-size: 3.5rem;
-    font-weight: 800;
-    line-height: 1.2;
+    font-family: Verdana, Tahoma, Arial, sans-serif !important;
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1.1;
     color: white;
     margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.text-gradient-advanced {
+    background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
 }
 
 .hero-description {
+    font-family: Verdana, Tahoma, Arial, sans-serif !important;
     font-size: 1.25rem;
     line-height: 1.8;
-    opacity: 0.95;
-    color: rgba(255, 255, 255, 0.95);
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 540px;
 }
 
 .hero-stats {
     display: flex;
-    gap: 3rem;
-    margin-top: 2rem;
+    gap: 2rem;
+    flex-wrap: wrap;
 }
 
-.stat-item {
-    text-align: center;
+.stat-item-modern {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.stat-number {
-    font-size: 2.5rem;
+.stat-icon-modern {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.stat-number-modern {
+    font-size: 2rem;
     font-weight: 800;
     color: white;
     line-height: 1;
 }
 
-.stat-label {
+.stat-label-modern {
     font-size: 0.875rem;
-    opacity: 0.9;
-    margin-top: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 0.25rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
-.btn-hero-primary {
+.btn-hero-primary-modern {
     background: white;
-    color: #667eea;
-    font-weight: 600;
-    padding: 1rem 2rem;
-    border-radius: 0.75rem;
+    color: #0E9C92;
+    font-weight: 700;
+    padding: 1rem 2.5rem;
+    border-radius: 12px;
+    border: none;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.btn-hero-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    color: #667eea;
+.btn-hero-primary-modern:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    color: #0E9C92;
 }
 
-.btn-hero-outline {
-    background: transparent;
+.btn-hero-secondary-modern {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
     color: white;
-    border: 2px solid white;
-    font-weight: 600;
-    padding: 1rem 2rem;
-    border-radius: 0.75rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    font-weight: 700;
+    padding: 1rem 2.5rem;
+    border-radius: 12px;
     transition: all 0.3s ease;
 }
 
-.btn-hero-outline:hover {
-    background: white;
-    color: #667eea;
-    transform: translateY(-2px);
+.btn-hero-secondary-modern:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
-/* Code Preview */
-.hero-visual {
+.hero-trust-badges {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.875rem;
+}
+
+.trust-item i {
+    font-size: 1.25rem;
+}
+
+/* Hero Visual Enhanced */
+.hero-visual-modern {
     position: relative;
+    z-index: 2;
 }
 
-.code-preview {
+.visual-container {
+    position: relative;
+    height: 500px;
+}
+
+.floating-card {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    animation: floatCard 6s infinite ease-in-out;
+    z-index: 3;
+}
+
+.card-1 {
+    top: 10%;
+    right: 10%;
+    animation-delay: 0s;
+}
+
+.card-2 {
+    top: 50%;
+    right: 5%;
+    animation-delay: 2s;
+}
+
+.card-3 {
+    bottom: 10%;
+    right: 15%;
+    animation-delay: 4s;
+}
+
+@keyframes floatCard {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #0E9C92, #0B7A73);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.card-content h6 {
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.card-content p {
+    color: #64748b;
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.main-visual {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 500px;
+}
+
+.code-window {
     background: #1e293b;
     border-radius: 1rem;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    transform: perspective(1000px) rotateY(-5deg);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
     transition: transform 0.3s ease;
 }
 
-.code-preview:hover {
-    transform: perspective(1000px) rotateY(0deg);
+.code-window:hover {
+    transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
 }
 
-.code-header {
+.window-header {
     background: #334155;
     padding: 1rem;
     display: flex;
@@ -527,403 +542,630 @@ result = learn_python()</code></pre>
     gap: 1rem;
 }
 
-.code-dots {
+.window-controls {
     display: flex;
     gap: 0.5rem;
 }
 
-.code-dots span {
+.control-dot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: #64748b;
 }
 
-.code-dots span:nth-child(1) { background: #ef4444; }
-.code-dots span:nth-child(2) { background: #f59e0b; }
-.code-dots span:nth-child(3) { background: #10b981; }
+.control-dot.red { background: #ef4444; }
+.control-dot.yellow { background: #f59e0b; }
+.control-dot.green { background: #10b981; }
 
-.code-title {
+.window-title {
     color: #cbd5e1;
     font-size: 0.875rem;
     font-weight: 500;
 }
 
-.code-body {
+.window-body {
     padding: 1.5rem;
+    font-family: 'Courier New', monospace;
 }
 
-.code-body pre {
-    margin: 0;
-    background: transparent;
+.code-line {
+    display: flex;
+    margin-bottom: 0.5rem;
+}
+
+.line-number {
+    color: #64748b;
+    margin-right: 1rem;
+    min-width: 30px;
+    text-align: right;
+}
+
+.code-text {
     color: #e2e8f0;
-    font-size: 0.875rem;
-    line-height: 1.8;
 }
 
-.code-keyword { color: #c792ea; }
-.code-function { color: #82aaff; }
-.code-string { color: #c3e88d; }
-.code-comment { color: #546e7a; font-style: italic; }
+.keyword { color: #c792ea; }
+.function { color: #82aaff; }
+.string { color: #c3e88d; }
+.comment { color: #546e7a; font-style: italic; }
 
-/* Features Section */
-.features-section {
-    background: white;
+/* Features Section Enhanced */
+.features-section-modern {
+    background: linear-gradient(to bottom, #f8fafc, white);
+    padding: 3rem 0 !important;
 }
 
-.section-header {
-    margin-bottom: 3rem;
+.section-header-modern {
+    margin-bottom: 2rem;
 }
 
-.section-badge {
+.section-badge-modern {
     display: inline-block;
-    padding: 0.5rem 1.25rem;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 0.5rem 1.5rem;
+    background: linear-gradient(135deg, #0E9C92, #0B7A73);
     color: white;
-    border-radius: 2rem;
+    border-radius: 50px;
     font-size: 0.875rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
 }
 
-.section-title {
-    font-size: 2.5rem;
-    font-weight: 800;
+.section-title-modern {
+    font-family: Verdana, Tahoma, Arial, sans-serif !important;
+    font-size: 3rem;
+    font-weight: 900;
     color: #1e293b;
     margin-bottom: 1rem;
+    letter-spacing: -0.02em;
 }
 
-.section-description {
+.section-description-modern {
     font-size: 1.125rem;
     color: #64748b;
     max-width: 600px;
     margin: 0 auto;
 }
 
-.feature-card {
+.feature-card-modern {
     background: white;
     border-radius: 1.5rem;
     padding: 2.5rem;
     height: 100%;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
     border: 1px solid #e2e8f0;
     position: relative;
     overflow: hidden;
 }
 
-.feature-card::before {
+.feature-card-modern::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #667eea, #764ba2);
+    background: linear-gradient(90deg, #0E9C92, #0B7A73);
     transform: scaleX(0);
-    transition: transform 0.3s ease;
+    transition: transform 0.4s ease;
 }
 
-.feature-card:hover::before {
+.feature-card-modern:hover::before {
     transform: scaleX(1);
 }
 
-.feature-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    border-color: #667eea;
+.feature-card-modern:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    border-color: #0E9C92;
 }
 
-.feature-icon {
-    width: 70px;
-    height: 70px;
-    border-radius: 1rem;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    color: white;
+.feature-icon-wrapper {
+    position: relative;
     margin-bottom: 1.5rem;
 }
 
-.feature-title {
+.feature-icon-modern {
+    width: 80px;
+    height: 80px;
+    border-radius: 1.5rem;
+    background: linear-gradient(135deg, #0E9C92, #0B7A73);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: white;
+    position: relative;
+    z-index: 2;
+}
+
+.feature-icon-modern.icon-success {
+    background: linear-gradient(135deg, #10B981, #059669);
+}
+
+.feature-icon-modern.icon-warning {
+    background: linear-gradient(135deg, #FFD93D, #FFC107);
+}
+
+.icon-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0E9C92, #0B7A73);
+    opacity: 0.2;
+    filter: blur(20px);
+    z-index: 1;
+    animation: pulseGlow 2s infinite;
+}
+
+.glow-success {
+    background: linear-gradient(135deg, #10B981, #059669);
+}
+
+.glow-warning {
+    background: linear-gradient(135deg, #FFD93D, #FFC107);
+}
+
+@keyframes pulseGlow {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.2; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.3; }
+}
+
+.feature-title-modern {
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 800;
     color: #1e293b;
     margin-bottom: 1rem;
 }
 
-.feature-description {
+.feature-description-modern {
     color: #64748b;
-    line-height: 1.7;
+    line-height: 1.8;
     margin-bottom: 1.5rem;
 }
 
-.feature-link a {
-    font-weight: 600;
+.feature-link-modern {
+    color: #0E9C92;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
     transition: all 0.3s ease;
 }
 
-.feature-link a:hover {
-    gap: 0.5rem;
+.feature-link-modern:hover {
+    color: #0B7A73;
+    transform: translateX(5px);
 }
 
-/* Stats Section */
-.stats-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    margin: 4rem -15px;
-    padding: 4rem 2rem;
+/* Stats Section Enhanced */
+.stats-section-modern {
+    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+    padding: 3rem 0;
+    margin: 2rem -15px;
 }
 
-.stats-card {
-    background: rgba(255, 255, 255, 0.1);
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.stat-card-modern {
+    background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
-    border-radius: 2rem;
-    padding: 3rem;
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
 }
 
-.stat-box {
+.stat-card-modern:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.stat-icon-large {
+    font-size: 4rem;
     color: white;
-}
-
-.stat-icon {
-    font-size: 3rem;
     margin-bottom: 1rem;
     opacity: 0.9;
 }
 
-.stat-value {
-    font-size: 3.5rem;
-    font-weight: 800;
+.stat-value-modern {
+    font-size: 4rem;
+    font-weight: 900;
+    color: white;
     line-height: 1;
     margin-bottom: 0.5rem;
 }
 
-.stat-label {
-    font-size: 1.125rem;
-    opacity: 0.9;
+.stat-label-large {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.9);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
+    font-weight: 600;
 }
 
-/* Course Cards Modern */
-.courses-section {
+/* Courses Section Enhanced */
+.courses-section-modern {
     background: white;
+    padding: 2rem 0 !important;
 }
 
-.course-card-modern {
+.courses-section-modern .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.courses-section-modern .row.justify-content-center {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 0;
+}
+
+/* Ensure cards fill available space with proper spacing */
+@media (min-width: 992px) {
+    .courses-section-modern .row.justify-content-center {
+        justify-content: flex-start;
+    }
+    
+    .courses-section-modern .row.justify-content-center .col-lg-4 {
+        flex: 0 0 auto;
+        width: calc(33.333333% - 1.5rem);
+        margin-right: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .courses-section-modern .row.justify-content-center .col-lg-4:nth-child(3n) {
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 991px) {
+    .courses-section-modern .row.justify-content-center .col-sm-6,
+    .courses-section-modern .row.justify-content-center .col-md-6 {
+        margin-bottom: 1.5rem;
+    }
+}
+
+.section-header-modern.mb-5 {
+    margin-bottom: 1.5rem !important;
+}
+
+.section-header-modern.mb-3 {
+    margin-bottom: 1.5rem !important;
+}
+
+.section-title-modern.mt-2 {
+    margin-top: 0.75rem !important;
+}
+
+.section-title-modern.mb-2 {
+    margin-bottom: 0.75rem !important;
+}
+
+.btn-view-all {
+    background: linear-gradient(135deg, #0E9C92, #0B7A73);
+    color: white;
+    border: none;
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-view-all:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    color: white;
+}
+
+.course-card-enhanced {
     background: white;
     border-radius: 1.5rem;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
     border: 1px solid #e2e8f0;
     height: 100%;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    width: 100%;
 }
 
-.course-card-modern:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+.course-card-enhanced:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    border-color: #0E9C92;
 }
 
-.course-card-modern.coming-soon {
-    opacity: 0.8;
-}
-
-.course-image-modern {
-    height: 200px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+.course-image-enhanced {
+    height: 180px;
+    background: linear-gradient(135deg, #0E9C92, #0B7A73);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 4rem;
-    color: white;
     position: relative;
     overflow: hidden;
 }
 
-.course-overlay {
+.course-gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.2));
+}
+
+.course-icon-large {
+    font-size: 5rem;
+    color: white;
+    position: relative;
+    z-index: 2;
+    opacity: 0.9;
+}
+
+.course-overlay-enhanced {
     position: absolute;
     top: 1rem;
     right: 1rem;
+    z-index: 3;
 }
 
-.badge-difficulty {
+.badge-difficulty-enhanced {
     padding: 0.5rem 1rem;
-    border-radius: 2rem;
-    font-weight: 600;
+    border-radius: 50px;
+    font-weight: 700;
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.course-content {
-    padding: 2rem;
+.course-content-enhanced {
+    padding: 1.5rem;
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-.course-title {
+.course-title-enhanced {
+    font-family: Verdana, Tahoma, Arial, sans-serif !important;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 800;
     color: #1e293b;
     margin-bottom: 1rem;
+    line-height: 1.3;
 }
 
-.course-description {
+.course-description-enhanced {
     color: #64748b;
     line-height: 1.7;
     margin-bottom: 1.5rem;
     flex: 1;
 }
 
-.course-footer {
+.course-footer-enhanced {
     margin-top: auto;
 }
 
-.btn-course {
+.btn-course-enhanced {
     width: 100%;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #0E9C92, #0B7A73);
     color: white;
     border: none;
-    padding: 0.875rem 1.5rem;
-    border-radius: 0.75rem;
-    font-weight: 600;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 700;
     transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.btn-course:hover:not(:disabled) {
+.btn-course-enhanced:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 15px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
     color: white;
 }
 
-.btn-course:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+/* How It Works Enhanced */
+.how-it-works-modern {
+    background: linear-gradient(to bottom, white, #f8fafc);
+    padding: 3rem 0 !important;
 }
 
-/* How It Works */
-.how-it-works-section {
-    background: #f8fafc;
-}
-
-.step-card {
+.step-card-modern {
     text-align: center;
-    padding: 2rem;
+    padding: 2.5rem 2rem;
     background: white;
     border-radius: 1.5rem;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
     border: 1px solid #e2e8f0;
     height: 100%;
+    position: relative;
+    overflow: hidden;
 }
 
-.step-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+.step-card-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #0E9C92, #0B7A73);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
 }
 
-.step-number {
-    font-size: 4rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+.step-card-modern:hover::before {
+    transform: scaleX(1);
+}
+
+.step-card-modern:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.step-number-modern {
+    font-size: 5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #0E9C92, #0B7A73);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     line-height: 1;
     margin-bottom: 1rem;
-    opacity: 0.2;
+    opacity: 0.15;
 }
 
-.step-icon {
-    width: 80px;
-    height: 80px;
+.step-icon-modern {
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #0E9C92, #0B7A73);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
-    color: white;
-    margin: -3rem auto 1.5rem;
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-}
-
-.step-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1e293b;
-    margin-bottom: 0.75rem;
-}
-
-.step-description {
-    color: #64748b;
-    line-height: 1.7;
-}
-
-/* CTA Section */
-.cta-section {
-    background: white;
-}
-
-.cta-card {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    border-radius: 2rem;
-    padding: 4rem;
-    color: white;
-    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
-}
-
-.cta-title {
     font-size: 2.5rem;
-    font-weight: 800;
     color: white;
+    margin: -4rem auto 1.5rem;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    position: relative;
+    z-index: 2;
+}
+
+.step-title-modern {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1e293b;
     margin-bottom: 1rem;
 }
 
-.cta-description {
-    font-size: 1.25rem;
-    opacity: 0.95;
-    color: rgba(255, 255, 255, 0.95);
+.step-description-modern {
+    color: #64748b;
+    line-height: 1.8;
 }
 
-.btn-cta-primary {
+/* CTA Section Enhanced */
+.cta-section-modern {
     background: white;
-    color: #667eea;
-    font-weight: 600;
-    padding: 1rem 2rem;
-    border-radius: 0.75rem;
-    transition: all 0.3s ease;
+    padding: 3rem 0 !important;
 }
 
-.btn-cta-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    color: #667eea;
-}
-
-.btn-cta-outline {
-    background: transparent;
+.cta-card-modern {
+    background: linear-gradient(135deg, #0E9C92, #0B7A73);
+    border-radius: 2rem;
+    padding: 3rem;
     color: white;
-    border: 2px solid white;
-    font-weight: 600;
-    padding: 1rem 2rem;
-    border-radius: 0.75rem;
+    box-shadow: 0 25px 60px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    opacity: 0.5;
+}
+
+.cta-title-modern {
+    font-size: 3rem;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.cta-description-modern {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.8;
+}
+
+.btn-cta-primary-modern {
+    background: white;
+    color: #0E9C92;
+    font-weight: 700;
+    padding: 1rem 2.5rem;
+    border-radius: 12px;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.btn-cta-primary-modern:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    color: #0E9C92;
+}
+
+.btn-cta-secondary-modern {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    font-weight: 700;
+    padding: 1rem 2.5rem;
+    border-radius: 12px;
     transition: all 0.3s ease;
 }
 
-.btn-cta-outline:hover {
-    background: white;
-    color: #667eea;
-    transform: translateY(-2px);
+.btn-cta-secondary-modern:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
-/* Responsive */
+/* Responsive Design */
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .section-title-modern {
+        font-size: 2.5rem;
+    }
+    
+    .cta-title-modern {
+        font-size: 2.5rem;
+    }
+    
+    .visual-container {
+        height: 400px;
+    }
+    
+    .floating-card {
+        display: none;
+    }
+}
+
 @media (max-width: 768px) {
+    .hero-section {
+        min-height: auto;
+        padding: 4rem 0;
+    }
+    
     .hero-title {
         font-size: 2.5rem;
     }
@@ -933,24 +1175,68 @@ result = learn_python()</code></pre>
     }
     
     .hero-stats {
-        gap: 2rem;
+        gap: 1rem;
     }
     
-    .section-title {
+    .stat-item-modern {
+        flex: 1;
+        min-width: 140px;
+    }
+    
+    .section-title-modern {
         font-size: 2rem;
     }
     
-    .code-preview {
+    .cta-title-modern {
+        font-size: 2rem;
+    }
+    
+    .code-window {
         transform: none;
-        margin-top: 2rem;
     }
     
-    .cta-title {
-        font-size: 2rem;
+    .stats-grid {
+        grid-template-columns: 1fr;
     }
     
-    .stat-value {
-        font-size: 2.5rem;
+    .stat-value-modern {
+        font-size: 3rem;
     }
+}
+
+/* Animation Utilities */
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.min-vh-80 {
+    min-height: 65vh;
+}
+
+/* Reduce spacing in section titles */
+.section-title-modern.mt-4 {
+    margin-top: 1.5rem !important;
+}
+
+/* Reduce padding in feature cards */
+.feature-card-modern {
+    padding: 2rem;
+}
+
+/* Reduce padding in step cards */
+.step-card-modern {
+    padding: 2rem 1.5rem;
 }
 </style>

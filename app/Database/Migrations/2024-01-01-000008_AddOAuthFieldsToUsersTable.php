@@ -41,3 +41,4 @@ class AddOAuthFieldsToUsersTable extends Migration
     }
 }
 
+

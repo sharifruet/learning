@@ -74,7 +74,7 @@
                 <div class="mt-4">
                     <?php if (session()->has('user_id')): ?>
                         <?php if ($isEnrolled): ?>
-                            <a href="<?= base_url('courses/' . $course['id']) ?>" class="btn btn-success btn-lg me-2">
+                            <a href="<?= base_url('courses/' . $course['slug']) ?>" class="btn btn-success btn-lg me-2">
                                 <i class="bi bi-check-circle me-2"></i>Enrolled - Continue Learning
                             </a>
                             <?php if (isset($progress)): ?>
@@ -95,7 +95,7 @@
                             <?php endif; ?>
                         <?php else: ?>
                             <?php if ($course['enrollment_type'] === 'open'): ?>
-                                <form method="POST" action="<?= base_url('enroll/' . $course['id']) ?>" class="d-inline">
+                                <form method="POST" action="<?= base_url('enroll/' . $course['slug']) ?>" class="d-inline">
                                     <?= csrf_field() ?>
                                     <button type="submit" class="btn btn-primary btn-lg">
                                         <i class="bi bi-plus-circle me-2"></i>Enroll Now - Free
@@ -152,7 +152,7 @@
                                     <p class="card-text text-muted mb-3"><?= esc($module['description']) ?></p>
                                 <?php endif; ?>
                                 <?php if ($isEnrolled): ?>
-                                    <a href="<?= base_url('courses/' . $course['id'] . '/module/' . $module['id']) ?>" class="btn btn-primary">
+                                    <a href="<?= base_url('courses/' . $course['slug'] . '/module/' . $module['id']) ?>" class="btn btn-primary">
                                         <i class="bi bi-arrow-right-circle me-2"></i>View Module
                                     </a>
                                 <?php else: ?>

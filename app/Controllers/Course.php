@@ -35,17 +35,19 @@ class Course extends BaseController
         return $this->render('courses/index', $data);
     }
 
-    public function view($courseId)
+    public function view($courseSlug)
     {
         $courseModel = new CourseModel();
         $enrollmentModel = new EnrollmentModel();
         
-        $course = $courseModel->getCourseWithDetails($courseId);
+        // Find course by slug
+        $course = $courseModel->getCourseWithDetailsBySlug($courseSlug);
         
         if (!$course || $course['status'] !== 'published') {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
         
+        $courseId = $course['id'];
         $userId = session()->get('user_id');
         $isEnrolled = false;
         $enrollment = null;
@@ -95,27 +97,36 @@ class Course extends BaseController
         return $this->render('courses/view', $data);
     }
 
-    public function module($courseId, $moduleId)
+    public function module($courseSlug, $moduleId)
     {
+        $courseModel = new CourseModel();
         $moduleModel = new ModuleModel();
+        
+        // Find course by slug
+        $course = $courseModel->findBySlug($courseSlug);
+        if (!$course) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+        
+        $courseId = $course['id'];
         $module = $moduleModel->getModuleWithLessons($moduleId);
         
         if (!$module || $module['course_id'] != $courseId) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
         
-        $courseModel = new CourseModel();
-        $course = $courseModel->find($courseId);
-        
         $userId = session()->get('user_id');
         $progressModel = new UserProgressModel();
         
-        // Get completed lessons
-        $completedLessons = $progressModel->where('user_id', $userId)
-                                          ->where('module_id', $moduleId)
-                                          ->where('status', 'completed')
-                                          ->findColumn('lesson_id');
-        $completedLessons = $completedLessons ?: [];
+        // Get completed lessons (only if user is logged in)
+        $completedLessons = [];
+        if ($userId) {
+            $completedLessons = $progressModel->where('user_id', $userId)
+                                              ->where('module_id', $moduleId)
+                                              ->where('status', 'completed')
+                                              ->findColumn('lesson_id');
+            $completedLessons = $completedLessons ?: [];
+        }
         
         $data['course'] = $course;
         $data['module'] = $module;

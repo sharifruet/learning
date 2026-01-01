@@ -72,7 +72,7 @@
                                             <h6 class="mb-1"><?= esc($lesson['title']) ?></h6>
                                             <small class="text-muted"><?= esc($course['title'] ?? 'Course') ?></small>
                                         </div>
-                                        <a href="<?= base_url('courses/' . $lesson['course_id'] . '/module/' . $lesson['module_id'] . '/lesson/' . $lesson['id']) ?>" class="btn btn-sm btn-outline-primary">
+                                        <a href="<?= base_url('courses/' . ($activity['course_slug'] ?? $lesson['course_id']) . '/module/' . $lesson['module_id'] . '/lesson/' . $lesson['id']) ?>" class="btn btn-sm btn-outline-primary">
                                             Continue
                                         </a>
                                     </div>
@@ -112,7 +112,7 @@
                                             <h6 class="mb-1"><?= esc($lesson['title']) ?></h6>
                                             <small class="text-muted"><?= esc($course['title'] ?? 'Course') ?></small>
                                         </div>
-                                        <a href="<?= base_url('courses/' . $lesson['course_id'] . '/module/' . $lesson['module_id'] . '/lesson/' . $lesson['id']) ?>" class="btn btn-sm btn-outline-primary">
+                                        <a href="<?= base_url('courses/' . ($bookmark['course_slug'] ?? $lesson['course_id']) . '/module/' . $lesson['module_id'] . '/lesson/' . $lesson['id']) ?>" class="btn btn-sm btn-outline-primary">
                                             View
                                         </a>
                                     </div>
@@ -191,7 +191,7 @@
                                 <?php endif; ?>
                                 
                                 <div class="mt-auto">
-                                    <a href="<?= base_url('courses/' . $course['id']) ?>" class="btn btn-primary w-100">
+                                    <a href="<?= base_url('courses/' . $course['slug']) ?>" class="btn btn-primary w-100">
                                         <i class="bi bi-play-circle me-2"></i>Continue Learning
                                     </a>
                                 </div>
@@ -244,7 +244,7 @@
                                     <?= esc(character_limiter($course['description'] ?? '', 100)) ?>
                                 </p>
                                 <div class="mt-auto">
-                                    <a href="<?= base_url('courses/' . $course['id']) ?>" class="btn btn-outline-primary w-100">
+                                    <a href="<?= base_url('courses/' . $course['slug']) ?>" class="btn btn-outline-primary w-100">
                                         <i class="bi bi-arrow-right-circle me-2"></i>View Course
                                     </a>
                                 </div>

@@ -11,38 +11,52 @@ use App\Models\ModuleModel;
 
 class Lesson extends BaseController
 {
-    public function view($courseId, $moduleId, $lessonId)
+    public function view($courseSlug, $moduleId, $lessonId)
     {
+        $courseModel = new CourseModel();
         $lessonModel = new LessonModel();
+        
+        // Find course by slug
+        $course = $courseModel->findBySlug($courseSlug);
+        if (!$course) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+        
+        $courseId = $course['id'];
         $lesson = $lessonModel->getLessonWithExercises($lessonId);
         
         if (!$lesson || $lesson['course_id'] != $courseId || $lesson['module_id'] != $moduleId) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
         
-        $courseModel = new CourseModel();
         $moduleModel = new ModuleModel();
-        
-        $course = $courseModel->find($courseId);
         $module = $moduleModel->find($moduleId);
         
         $userId = session()->get('user_id');
         $progressModel = new UserProgressModel();
         $bookmarkModel = new \App\Models\BookmarkModel();
         
-        // Update last accessed time
-        $progressModel->updateLastAccessed($userId, $lessonId, $courseId, $moduleId);
+        // Update last accessed time (only if user is logged in)
+        if ($userId) {
+            $progressModel->updateLastAccessed($userId, $lessonId, $courseId, $moduleId);
+        }
         
-        // Check if lesson is completed
-        $progress = $progressModel->where('user_id', $userId)
-                                  ->where('lesson_id', $lessonId)
-                                  ->first();
+        // Check if lesson is completed (only if user is logged in)
+        $progress = null;
+        if ($userId) {
+            $progress = $progressModel->where('user_id', $userId)
+                                      ->where('lesson_id', $lessonId)
+                                      ->first();
+        }
         
-        // Check if bookmarked
-        $isBookmarked = $bookmarkModel->isBookmarked($userId, $lessonId);
+        // Check if bookmarked (only if user is logged in)
+        $isBookmarked = false;
+        if ($userId) {
+            $isBookmarked = $bookmarkModel->isBookmarked($userId, $lessonId);
+        }
         
         // Get previous and next lessons
-        $navigation = $this->getLessonNavigation($courseId, $moduleId, $lessonId);
+        $navigation = $this->getLessonNavigation($courseId, $moduleId, $lessonId, $courseSlug);
         
         $data['course'] = $course;
         $data['module'] = $module;
@@ -58,7 +72,7 @@ class Lesson extends BaseController
     /**
      * Get previous and next lesson navigation
      */
-    private function getLessonNavigation($courseId, $moduleId, $lessonId)
+    private function getLessonNavigation($courseId, $moduleId, $lessonId, $courseSlug)
     {
         $lessonModel = new LessonModel();
         $moduleModel = new ModuleModel();
@@ -103,7 +117,7 @@ class Lesson extends BaseController
             $navigation['previous'] = [
                 'id' => $prevLesson['id'],
                 'title' => $prevLesson['title'],
-                'url' => base_url('courses/' . $prevLesson['course_id'] . '/module/' . $prevLesson['module_id'] . '/lesson/' . $prevLesson['id']),
+                'url' => base_url('courses/' . $courseSlug . '/module/' . $prevLesson['module_id'] . '/lesson/' . $prevLesson['id']),
             ];
         }
         
@@ -112,7 +126,7 @@ class Lesson extends BaseController
             $navigation['next'] = [
                 'id' => $nextLesson['id'],
                 'title' => $nextLesson['title'],
-                'url' => base_url('courses/' . $nextLesson['course_id'] . '/module/' . $nextLesson['module_id'] . '/lesson/' . $nextLesson['id']),
+                'url' => base_url('courses/' . $courseSlug . '/module/' . $nextLesson['module_id'] . '/lesson/' . $nextLesson['id']),
             ];
         }
         
@@ -122,7 +136,7 @@ class Lesson extends BaseController
     /**
      * Toggle bookmark
      */
-    public function toggleBookmark($courseId, $moduleId, $lessonId)
+    public function toggleBookmark($courseSlug, $moduleId, $lessonId)
     {
         $userId = session()->get('user_id');
         $bookmarkModel = new \App\Models\BookmarkModel();
@@ -135,8 +149,15 @@ class Lesson extends BaseController
     /**
      * Mark lesson as complete
      */
-    public function markComplete($courseId, $moduleId, $lessonId)
+    public function markComplete($courseSlug, $moduleId, $lessonId)
     {
+        $courseModel = new CourseModel();
+        $course = $courseModel->findBySlug($courseSlug);
+        if (!$course) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+        
+        $courseId = $course['id'];
         $userId = session()->get('user_id');
         $progressModel = new UserProgressModel();
         
@@ -153,7 +174,7 @@ class Lesson extends BaseController
     /**
      * Track time spent on lesson (AJAX)
      */
-    public function trackTime($courseId, $moduleId, $lessonId)
+    public function trackTime($courseSlug, $moduleId, $lessonId)
     {
         $userId = session()->get('user_id');
         $seconds = (int)$this->request->getPost('seconds', 0);
@@ -166,8 +187,15 @@ class Lesson extends BaseController
         return $this->response->setJSON(['success' => true]);
     }
 
-    public function submitExercise($courseId, $moduleId, $lessonId)
+    public function submitExercise($courseSlug, $moduleId, $lessonId)
     {
+        // Exercise submission requires login
+        $userId = session()->get('user_id');
+        if (!$userId) {
+            return redirect()->to('/auth/login')
+                ->with('error', 'Please login to submit exercises.');
+        }
+        
         $exerciseId = $this->request->getPost('exercise_id');
         $code = $this->request->getPost('code');
         
@@ -181,8 +209,6 @@ class Lesson extends BaseController
         if (!$exercise || $exercise['lesson_id'] != $lessonId) {
             return redirect()->back()->with('error', 'Invalid exercise');
         }
-        
-        $userId = session()->get('user_id');
         $submissionModel = new CodeSubmissionModel();
         
         // Save submission
@@ -210,6 +236,10 @@ class Lesson extends BaseController
         
         // Mark lesson as completed if exercise is correct
         if ($isCorrect) {
+            $courseModel = new CourseModel();
+            $course = $courseModel->findBySlug($courseSlug);
+            $courseId = $course ? $course['id'] : null;
+            
             $progressModel = new UserProgressModel();
             $progressModel->markLessonComplete($userId, $lessonId, $courseId, $moduleId);
         }

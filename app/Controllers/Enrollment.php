@@ -19,7 +19,7 @@ class Enrollment extends BaseController
     /**
      * Enroll in a course (one-click enrollment)
      */
-    public function enroll($courseId)
+    public function enroll($courseSlug)
     {
         if (!session()->has('user_id')) {
             return redirect()->to('/auth/login')
@@ -27,12 +27,14 @@ class Enrollment extends BaseController
         }
 
         $userId = session()->get('user_id');
-        $course = $this->courseModel->find($courseId);
+        $course = $this->courseModel->findBySlug($courseSlug);
 
         if (!$course) {
             return redirect()->to('/courses')
                 ->with('error', 'Course not found.');
         }
+
+        $courseId = $course['id'];
 
         // Check if course is published
         if ($course['status'] !== 'published') {
@@ -48,7 +50,7 @@ class Enrollment extends BaseController
 
         // Check if already enrolled
         if ($this->enrollmentModel->isEnrolled($userId, $courseId)) {
-            return redirect()->to('/courses/' . $courseId)
+            return redirect()->to('/courses/' . $courseSlug)
                 ->with('info', 'You are already enrolled in this course.');
         }
 
@@ -66,7 +68,7 @@ class Enrollment extends BaseController
             // Update last accessed
             $this->enrollmentModel->updateProgress($userId, $courseId, 0.00);
             
-            return redirect()->to('/courses/' . $courseId)
+            return redirect()->to('/courses/' . $courseSlug)
                 ->with('success', 'Successfully enrolled in ' . $course['title'] . '!');
         }
 
@@ -77,13 +79,21 @@ class Enrollment extends BaseController
     /**
      * Unenroll from a course
      */
-    public function unenroll($courseId)
+    public function unenroll($courseSlug)
     {
         if (!session()->has('user_id')) {
             return redirect()->to('/auth/login');
         }
 
         $userId = session()->get('user_id');
+        $course = $this->courseModel->findBySlug($courseSlug);
+        
+        if (!$course) {
+            return redirect()->to('/dashboard')
+                ->with('error', 'Course not found.');
+        }
+        
+        $courseId = $course['id'];
         
         $enrollment = $this->enrollmentModel->where('user_id', $userId)
                                            ->where('course_id', $courseId)

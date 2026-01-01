@@ -41,10 +41,11 @@ Events::on('pre_system', static function () {
      * Debug Toolbar Listeners.
      * --------------------------------------------------------------------
      * If you delete, they will no longer be collected.
+     * Disabled to remove CodeIgniter logo from bottom-right corner.
      */
-    if (CI_DEBUG && ! is_cli()) {
-        Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
-        Services::toolbar()->respond();
-    }
+    // if (CI_DEBUG && ! is_cli()) {
+    //     Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
+    //     Services::toolbar()->respond();
+    // }
 });
 

@@ -14,7 +14,7 @@ class Email extends BaseConfig
     /**
      * @var string
      */
-    public string $fromName = 'Python Learning Platform';
+    public string $fromName = 'bandhanhara learning';
 
     /**
      * The "user agent"

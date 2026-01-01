@@ -8,6 +8,16 @@ use App\Models\LessonModel;
 
 class Home extends BaseController
 {
+    public function python()
+    {
+        return redirect()->to('/courses/python-programming');
+    }
+
+    public function javascript()
+    {
+        return redirect()->to('/courses/javascript-programming');
+    }
+
     public function index()
     {
         $courseModel = new CourseModel();

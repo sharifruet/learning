@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Learn Python programming with interactive lessons, hands-on exercises, and real-world projects">
-    <title><?= esc($title ?? 'Python Learning Platform') ?></title>
+    <meta name="description" content="Free online learning platform with interactive lessons and courses. Learn any subject at your own pace - from programming to any topic you want to master.">
+    <title><?= esc($title ?? 'bandhanhara learning') ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        html, body, * {
+            font-family: Verdana, Tahoma, Arial, sans-serif !important;
         }
     </style>
 </head>
@@ -21,7 +18,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="<?= base_url() ?>">
-                <i class="bi bi-code-slash"></i> Python Learn
+                <img src="<?= base_url('logo.png') ?>" alt="Bandhanhara Learning" class="navbar-logo" style="height: 40px; width: auto;">
+                <span class="ms-2">Bandhanhara Learning</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -138,10 +136,11 @@
         <div class="container py-4">
             <div class="row">
                 <div class="col-md-6">
-                    <h5 class="mb-3">
-                        <i class="bi bi-code-slash"></i> Python Learn
-                    </h5>
-                    <p class="text-muted">Master Python programming with interactive lessons and hands-on projects.</p>
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="<?= base_url('logo.png') ?>" alt="Bandhanhara Learning" class="footer-logo" style="height: 50px; width: auto;">
+                        <span class="ms-2 text-white" style="font-size: 1.25rem; font-weight: 600;">Bandhanhara Learning</span>
+                    </div>
+                    <p class="text-muted">Free online learning platform with interactive courses and lessons. Learn any subject - from programming to any topic you want to master.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <h5 class="mb-3">Quick Links</h5>
@@ -158,7 +157,7 @@
             </div>
             <hr class="my-4 bg-secondary">
             <div class="text-center text-muted">
-                <p class="mb-0">&copy; <?= date('Y') ?> Python Learning Platform. All rights reserved.</p>
+                <p class="mb-0">&copy; <?= date('Y') ?> bandhanhara learning. All rights reserved.</p>
             </div>
         </div>
     </footer>

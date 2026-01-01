@@ -1,8 +1,8 @@
 <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="<?= base_url('courses') ?>">Courses</a></li>
-        <li class="breadcrumb-item"><a href="<?= base_url('courses/' . $course['id']) ?>"><?= esc($course['title']) ?></a></li>
-        <li class="breadcrumb-item"><a href="<?= base_url('courses/' . $course['id'] . '/module/' . $module['id']) ?>"><?= esc($module['title']) ?></a></li>
+        <li class="breadcrumb-item"><a href="<?= base_url('courses/' . $course['slug']) ?>"><?= esc($course['title']) ?></a></li>
+        <li class="breadcrumb-item"><a href="<?= base_url('courses/' . $course['slug'] . '/module/' . $module['id']) ?>"><?= esc($module['title']) ?></a></li>
         <li class="breadcrumb-item active"><?= esc($lesson['title']) ?></li>
     </ol>
 </nav>
@@ -33,14 +33,14 @@
                                 <i class="bi bi-check-circle-fill me-2"></i>Completed
                             </span>
                         <?php else: ?>
-                            <form method="POST" action="<?= base_url('courses/' . $course['id'] . '/module/' . $module['id'] . '/lesson/' . $lesson['id'] . '/complete') ?>" class="d-inline">
+                            <form method="POST" action="<?= base_url('courses/' . $course['slug'] . '/module/' . $module['id'] . '/lesson/' . $lesson['id'] . '/complete') ?>" class="d-inline">
                                 <?= csrf_field() ?>
                                 <button type="submit" class="btn btn-success btn-sm">
                                     <i class="bi bi-check-circle me-2"></i>Mark as Complete
                                 </button>
                             </form>
                         <?php endif; ?>
-                        <form method="POST" action="<?= base_url('courses/' . $course['id'] . '/module/' . $module['id'] . '/lesson/' . $lesson['id'] . '/bookmark') ?>" class="d-inline">
+                        <form method="POST" action="<?= base_url('courses/' . $course['slug'] . '/module/' . $module['id'] . '/lesson/' . $lesson['id'] . '/bookmark') ?>" class="d-inline">
                             <?= csrf_field() ?>
                             <button type="submit" class="btn btn-<?= $is_bookmarked ? 'warning' : 'outline-secondary' ?> btn-sm">
                                 <i class="bi bi-bookmark<?= $is_bookmarked ? '-fill' : '' ?> me-2"></i><?= $is_bookmarked ? 'Bookmarked' : 'Bookmark' ?>
@@ -117,7 +117,7 @@
                                     <p><?= esc($exercise['description']) ?></p>
                                 <?php endif; ?>
                                 
-                                <form method="POST" action="<?= base_url('courses/' . $course['id'] . '/module/' . $module['id'] . '/lesson/' . $lesson['id'] . '/exercise') ?>">
+                                <form method="POST" action="<?= base_url('courses/' . $course['slug'] . '/module/' . $module['id'] . '/lesson/' . $lesson['id'] . '/exercise') ?>">
                                     <?= csrf_field() ?>
                                     <input type="hidden" name="exercise_id" value="<?= $exercise['id'] ?>">
                                     
@@ -204,7 +204,7 @@
                                                     <i class="bi bi-arrow-right-circle-fill me-1"></i><?= esc($les['title']) ?>
                                                 </span>
                                             <?php else: ?>
-                                                <a href="<?= base_url('courses/' . $course['id'] . '/module/' . $mod['id'] . '/lesson/' . $les['id']) ?>" class="text-decoration-none">
+                                                <a href="<?= base_url('courses/' . $course['slug'] . '/module/' . $mod['id'] . '/lesson/' . $les['id']) ?>" class="text-decoration-none">
                                                     <i class="bi bi-circle me-1"></i><?= esc($les['title']) ?>
                                                 </a>
                                             <?php endif; ?>
@@ -261,7 +261,7 @@
             var secondsToTrack = secondsSpent - lastTracked;
 
             if (secondsToTrack >= 60) { // Track at least 60 seconds
-                fetch('<?= base_url('courses/' . $course['id'] . '/module/' . $module['id'] . '/lesson/' . $lesson['id'] . '/track-time') ?>', {
+                fetch('<?= base_url('courses/' . $course['slug'] . '/module/' . $module['id'] . '/lesson/' . $lesson['id'] . '/track-time') ?>', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -289,7 +289,7 @@
             if (secondsToTrack > 0) {
                 // Use sendBeacon for reliable tracking on page unload
                 navigator.sendBeacon(
-                    '<?= base_url('courses/' . $course['id'] . '/module/' . $module['id'] . '/lesson/' . $lesson['id'] . '/track-time') ?>',
+                    '<?= base_url('courses/' . $course['slug'] . '/module/' . $module['id'] . '/lesson/' . $lesson['id'] . '/track-time') ?>',
                     '<?= csrf_token() ?>=<?= csrf_hash() ?>&seconds=' + secondsToTrack
                 );
             }

@@ -73,9 +73,28 @@ class Dashboard extends BaseController
                                        ->limit(5)
                                        ->findAll();
         
+        // Add course slug to recent activity
+        foreach ($recentActivity as &$activity) {
+            $course = $courseModel->find($activity['course_id']);
+            if ($course) {
+                $activity['course_slug'] = $course['slug'];
+            }
+        }
+        
         // Get bookmarked lessons
         $bookmarkModel = new \App\Models\BookmarkModel();
         $bookmarks = $bookmarkModel->getUserBookmarks($userId);
+        
+        // Add course slug to bookmarks
+        foreach ($bookmarks as &$bookmark) {
+            $lesson = (new \App\Models\LessonModel())->find($bookmark['lesson_id']);
+            if ($lesson) {
+                $course = $courseModel->find($lesson['course_id']);
+                if ($course) {
+                    $bookmark['course_slug'] = $course['slug'];
+                }
+            }
+        }
         
         $data['enrolledCourses'] = $enrolledCourses;
         $data['allCourses'] = $allCourses;

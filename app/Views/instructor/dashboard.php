@@ -135,7 +135,7 @@
                                             <a href="<?= base_url('admin/courses/' . $course['id'] . '/modules') ?>" class="btn btn-outline-success" title="Modules">
                                                 <i class="bi bi-folder"></i>
                                             </a>
-                                            <a href="<?= base_url('courses/' . $course['id']) ?>" class="btn btn-outline-info" title="View" target="_blank">
+                                            <a href="<?= base_url('courses/' . $course['slug']) ?>" class="btn btn-outline-info" title="View" target="_blank">
                                                 <i class="bi bi-eye"></i>
                                             </a>
                                         </div>

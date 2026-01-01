@@ -42,11 +42,11 @@
 </head>
 <body>
     <div class="container">
-        <h2>Welcome to Python Learning Platform!</h2>
+        <h2>Welcome to bandhanhara learning!</h2>
         
         <p>Hello <?= esc($name) ?>,</p>
         
-        <p>Thank you for registering with Python Learning Platform. To complete your registration and start learning, please verify your email address by clicking the button below:</p>
+        <p>Thank you for registering with bandhanhara learning. To complete your registration and start learning, please verify your email address by clicking the button below:</p>
         
         <p style="text-align: center;">
             <a href="<?= esc($verificationUrl) ?>" class="button">Verify Email Address</a>
@@ -60,7 +60,7 @@
         <p>If you didn't create an account with us, please ignore this email.</p>
         
         <div class="footer">
-            <p>Best regards,<br>The Python Learning Platform Team</p>
+            <p>Best regards,<br>The bandhanhara learning Team</p>
             <p>This is an automated email, please do not reply.</p>
         </div>
     </div>

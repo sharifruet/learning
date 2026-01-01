@@ -9,7 +9,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call('UserSeeder');
-        $this->call('CourseSeeder');
+        // Uncomment the line below to use master data instead of CourseSeeder
+        // $this->call('CourseSeeder');
+        $this->call('MasterDataSeeder');
     }
 }
 

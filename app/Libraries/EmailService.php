@@ -35,7 +35,7 @@ class EmailService
 
         $this->email->setFrom($this->config->fromEmail, $this->config->fromName);
         $this->email->setTo($toEmail);
-        $this->email->setSubject('Verify Your Email Address - Python Learning Platform');
+        $this->email->setSubject('Verify Your Email Address - bandhanhara learning');
         $this->email->setMessage($message);
 
         return $this->email->send();
@@ -60,7 +60,7 @@ class EmailService
 
         $this->email->setFrom($this->config->fromEmail, $this->config->fromName);
         $this->email->setTo($toEmail);
-        $this->email->setSubject('Reset Your Password - Python Learning Platform');
+        $this->email->setSubject('Reset Your Password - bandhanhara learning');
         $this->email->setMessage($message);
 
         return $this->email->send();

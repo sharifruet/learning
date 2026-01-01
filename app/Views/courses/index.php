@@ -88,7 +88,7 @@
                                 <?= esc(character_limiter($course['description'] ?? '', 100)) ?>
                             </p>
                             <div class="mt-auto">
-                                <a href="<?= base_url('courses/' . $course['id']) ?>" class="btn btn-primary w-100">
+                                <a href="<?= base_url('courses/' . $course['slug']) ?>" class="btn btn-primary w-100">
                                     <i class="bi bi-arrow-right-circle me-2"></i>View Course
                                 </a>
                             </div>

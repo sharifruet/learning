@@ -56,22 +56,27 @@ $routes->group('dashboard', ['namespace' => 'App\Controllers', 'filter' => 'auth
     $routes->get('/', 'Dashboard::index');
 });
 
+// Shortcut routes for popular courses (must be before course routes)
+$routes->get('python', 'Home::python');
+$routes->get('javascript', 'Home::javascript');
+
 // Course routes (public - browsable without login)
+// Using slugs for better SEO and user-friendly URLs
 $routes->group('courses', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('/', 'Course::index');
-    $routes->get('(:num)', 'Course::view/$1');
-    $routes->get('(:num)/module/(:num)', 'Course::module/$1/$2');
-    $routes->get('(:num)/module/(:num)/lesson/(:num)', 'Lesson::view/$1/$2/$3');
-    $routes->post('(:num)/module/(:num)/lesson/(:num)/exercise', 'Lesson::submitExercise/$1/$2/$3');
-    $routes->post('(:num)/module/(:num)/lesson/(:num)/bookmark', 'Lesson::toggleBookmark/$1/$2/$3', ['filter' => 'auth']);
-    $routes->post('(:num)/module/(:num)/lesson/(:num)/complete', 'Lesson::markComplete/$1/$2/$3', ['filter' => 'auth']);
-    $routes->post('(:num)/module/(:num)/lesson/(:num)/track-time', 'Lesson::trackTime/$1/$2/$3', ['filter' => 'auth']);
+    $routes->get('(:segment)', 'Course::view/$1'); // Course slug
+    $routes->get('(:segment)/module/(:num)', 'Course::module/$1/$2'); // Course slug, module ID
+    $routes->get('(:segment)/module/(:num)/lesson/(:num)', 'Lesson::view/$1/$2/$3'); // Course slug, module ID, lesson ID
+    $routes->post('(:segment)/module/(:num)/lesson/(:num)/exercise', 'Lesson::submitExercise/$1/$2/$3');
+    $routes->post('(:segment)/module/(:num)/lesson/(:num)/bookmark', 'Lesson::toggleBookmark/$1/$2/$3', ['filter' => 'auth']);
+    $routes->post('(:segment)/module/(:num)/lesson/(:num)/complete', 'Lesson::markComplete/$1/$2/$3', ['filter' => 'auth']);
+    $routes->post('(:segment)/module/(:num)/lesson/(:num)/track-time', 'Lesson::trackTime/$1/$2/$3', ['filter' => 'auth']);
 });
 
-// Enrollment routes (requires authentication)
+// Enrollment routes (requires authentication) - using course slug
 $routes->group('enroll', ['namespace' => 'App\Controllers', 'filter' => 'auth'], function($routes) {
-    $routes->post('(:num)', 'Enrollment::enroll/$1');
-    $routes->post('(:num)/unenroll', 'Enrollment::unenroll/$1');
+    $routes->post('(:segment)', 'Enrollment::enroll/$1'); // Course slug
+    $routes->post('(:segment)/unenroll', 'Enrollment::unenroll/$1'); // Course slug
 });
 
 // Instructor routes (protected - instructor and admin)

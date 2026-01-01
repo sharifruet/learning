@@ -17,8 +17,9 @@ This guide will help you set up Google and Facebook OAuth login for the Python L
 6. Create OAuth client ID:
    - Application type: **Web application**
    - Name: Python Learning Platform (or your preferred name)
-   - Authorized redirect URIs: `http://localhost:8080/auth/google/callback` (for development)
-   - For production: `https://yourdomain.com/auth/google/callback`
+   - Authorized redirect URIs: 
+     - Development: `http://localhost:8080/auth/google/callback`
+     - Production: `https://learning.bandhanhara.com/auth/google/callback`
 7. Copy the **Client ID** and **Client Secret**
 
 ### 2. Configure Environment Variables
@@ -31,9 +32,9 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret_here
 GOOGLE_REDIRECT_URI=http://localhost:8080/auth/google/callback
 ```
 
-For production, update the redirect URI:
+For production (learning.bandhanhara.com), update the redirect URI:
 ```env
-GOOGLE_REDIRECT_URI=https://yourdomain.com/auth/google/callback
+GOOGLE_REDIRECT_URI=https://learning.bandhanhara.com/auth/google/callback
 ```
 
 ## Facebook OAuth Setup
@@ -49,12 +50,14 @@ GOOGLE_REDIRECT_URI=https://yourdomain.com/auth/google/callback
 5. Add **Facebook Login** product:
    - Go to **Products** > **Facebook Login** > **Set Up**
    - Choose **Web** platform
-   - Site URL: `http://localhost:8080` (for development)
-   - For production: `https://yourdomain.com`
+   - Site URL: 
+     - Development: `http://localhost:8080`
+     - Production: `https://learning.bandhanhara.com`
 6. Configure Settings:
    - Go to **Facebook Login** > **Settings**
-   - Valid OAuth Redirect URIs: `http://localhost:8080/auth/facebook/callback`
-   - For production: `https://yourdomain.com/auth/facebook/callback`
+   - Valid OAuth Redirect URIs: 
+     - Development: `http://localhost:8080/auth/facebook/callback`
+     - Production: `https://learning.bandhanhara.com/auth/facebook/callback`
 7. Get your App ID and App Secret:
    - Go to **Settings** > **Basic**
    - Copy the **App ID** and **App Secret**
@@ -69,9 +72,9 @@ FACEBOOK_APP_SECRET=your_facebook_app_secret_here
 FACEBOOK_REDIRECT_URI=http://localhost:8080/auth/facebook/callback
 ```
 
-For production, update the redirect URI:
+For production (learning.bandhanhara.com), update the redirect URI:
 ```env
-FACEBOOK_REDIRECT_URI=https://yourdomain.com/auth/facebook/callback
+FACEBOOK_REDIRECT_URI=https://learning.bandhanhara.com/auth/facebook/callback
 ```
 
 ## Running Migrations
@@ -117,4 +120,5 @@ php spark migrate
 - In production, always use HTTPS
 - Regularly rotate your OAuth credentials
 - Keep your OAuth credentials secure and never share them publicly
+
 

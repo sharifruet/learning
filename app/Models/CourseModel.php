@@ -132,5 +132,26 @@ class CourseModel extends Model
 
         return $course;
     }
+
+    /**
+     * Find course by slug
+     */
+    public function findBySlug($slug)
+    {
+        return $this->where('slug', $slug)->first();
+    }
+
+    /**
+     * Get course with details by slug
+     */
+    public function getCourseWithDetailsBySlug($slug)
+    {
+        $course = $this->findBySlug($slug);
+        if (!$course) {
+            return null;
+        }
+
+        return $this->getCourseWithDetails($course['id']);
+    }
 }
 

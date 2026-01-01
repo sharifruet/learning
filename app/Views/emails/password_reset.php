@@ -53,7 +53,7 @@
         
         <p>Hello <?= esc($name) ?>,</p>
         
-        <p>We received a request to reset your password for your Python Learning Platform account. Click the button below to reset your password:</p>
+        <p>We received a request to reset your password for your bandhanhara learning account. Click the button below to reset your password:</p>
         
         <p style="text-align: center;">
             <a href="<?= esc($resetUrl) ?>" class="button">Reset Password</a>
@@ -67,7 +67,7 @@
         </div>
         
         <div class="footer">
-            <p>Best regards,<br>The Python Learning Platform Team</p>
+            <p>Best regards,<br>The bandhanhara learning Team</p>
             <p>This is an automated email, please do not reply.</p>
         </div>
     </div>

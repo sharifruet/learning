@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="<?= base_url('courses') ?>">Courses</a></li>
-        <li class="breadcrumb-item"><a href="<?= base_url('courses/' . $course['id']) ?>"><?= esc($course['title']) ?></a></li>
+        <li class="breadcrumb-item"><a href="<?= base_url('courses/' . $course['slug']) ?>"><?= esc($course['title']) ?></a></li>
         <li class="breadcrumb-item active"><?= esc($module['title']) ?></li>
     </ol>
 </nav>
@@ -24,7 +24,7 @@
                             <?php endif; ?>
                         </h5>
                     </div>
-                    <a href="<?= base_url('courses/' . $course['id'] . '/module/' . $module['id'] . '/lesson/' . $lesson['id']) ?>" class="btn btn-primary">
+                    <a href="<?= base_url('courses/' . $course['slug'] . '/module/' . $module['id'] . '/lesson/' . $lesson['id']) ?>" class="btn btn-primary">
                         Start Lesson <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>
