@@ -13,6 +13,14 @@ use CodeIgniter\Debug\Toolbar\Collectors\Views;
 
 class Toolbar extends BaseConfig
 {
+    /**
+     * --------------------------------------------------------------------------
+     * Toolbar Enabled
+     * --------------------------------------------------------------------------
+     * Disabled to prevent debugbar script injection
+     */
+    public bool $enabled = false;
+
     public array $collectors = [
         Timers::class,
         Database::class,

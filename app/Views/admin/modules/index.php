@@ -47,7 +47,14 @@
                                     <td class="ps-4 fw-semibold"><?= esc($module['title']) ?></td>
                                     <td>
                                         <?php if (!empty($module['description'])): ?>
-                                            <?= esc(character_limiter($module['description'], 100)) ?>
+                                            <?php 
+                                            $desc = $module['description'];
+                                            $maxLen = 100;
+                                            if (mb_strlen($desc) > $maxLen) {
+                                                $desc = mb_substr($desc, 0, $maxLen) . '...';
+                                            }
+                                            echo esc($desc);
+                                            ?>
                                         <?php else: ?>
                                             <span class="text-muted">No description</span>
                                         <?php endif; ?>

@@ -58,6 +58,15 @@ class Lesson extends BaseController
         // Get previous and next lessons
         $navigation = $this->getLessonNavigation($courseId, $moduleId, $lessonId, $courseSlug);
         
+        // Parse Markdown content if content_type is markdown
+        $contentType = $lesson['content_type'] ?? 'html';
+        if ($contentType === 'markdown' && !empty($lesson['content'])) {
+            $markdownService = \Config\Services::markdown();
+            $lesson['content_html'] = $markdownService->parse($lesson['content']);
+        } else {
+            $lesson['content_html'] = $lesson['content'] ?? '';
+        }
+        
         $data['course'] = $course;
         $data['module'] = $module;
         $data['lesson'] = $lesson;
@@ -65,6 +74,17 @@ class Lesson extends BaseController
         $data['is_completed'] = $progress && $progress['status'] === 'completed';
         $data['is_bookmarked'] = $isBookmarked;
         $data['navigation'] = $navigation;
+        
+        // SEO data
+        $lessonDescription = !empty($lesson['description']) ? $lesson['description'] : 'Learn ' . $lesson['title'] . ' - Part of the ' . $course['title'] . ' course.';
+        $data['seo'] = [
+            'title' => $lesson['title'] . ' - ' . $course['title'],
+            'description' => $lessonDescription . ' Free online lesson with interactive examples and exercises.',
+            'keywords' => $lesson['title'] . ', ' . $course['title'] . ', online lesson, free tutorial, programming lesson',
+            'url' => base_url('courses/' . $courseSlug . '/module/' . $moduleId . '/lesson/' . $lessonId),
+            'type' => 'article',
+            'image' => !empty($lesson['featured_image']) ? base_url($lesson['featured_image']) : (!empty($course['image']) ? base_url($course['image']) : base_url('logo.png'))
+        ];
         
         return $this->render('lessons/view', $data);
     }

@@ -14,8 +14,7 @@
             <div class="col-lg-6 col-xl-5">
                 <div class="hero-content">
                     <div class="app-name-hero mb-4 fade-in-up">
-                        <img src="<?= base_url('logo.png') ?>" alt="Bandhanhara Learning" class="hero-logo" style="max-height: 120px; width: auto;">
-                        <h2 class="ms-3 mb-0 text-white" style="font-size: 2.5rem; font-weight: 700;">Bandhanhara Learning</h2>
+                        <img src="<?= base_url('logo.png') ?>" alt="Bandhanhara Learning" class="hero-logo" style="max-height: 80px; width: auto;">
                     </div>
                     <h1 class="hero-title mb-3 fade-in-up" style="animation-delay: 0.2s">
                         Learn Anything,
@@ -275,6 +274,10 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, select, label 
 .hero-logo {
     filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
     transition: transform 0.3s ease;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .hero-logo:hover {

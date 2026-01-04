@@ -109,6 +109,12 @@ MySQL/MariaDB database will store:
 - Course categories and tags
 - Course details page (description, syllabus, instructor, duration, prerequisites)
 - Course preview/demo access
+- **Hierarchical Course Display**:
+  - Parent courses (programs) can be displayed as expandable items showing subcourses
+  - Subcourses can be displayed both as part of their parent course and as standalone items
+  - Catalog view options: Show all courses (flat), Show parent courses with subcourses (hierarchical), Show only standalone courses
+  - Parent course detail pages show overview and list of subcourses with individual progress
+  - Subcourse detail pages show parent course context when applicable
 - **Default Enrollment Model**: Most courses are **open for all** with:
   - Public visibility (no login required to view catalog)
   - Open enrollment (self-enrollment, no approval required)
@@ -121,15 +127,42 @@ MySQL/MariaDB database will store:
 - Course capacity management (only for restricted courses)
 - Waitlist functionality (only for capacity-limited courses)
 
-#### 4.2.2 Course Structure (Example: Python Program)
-- **Programs/Courses**: Top-level educational programs (e.g., "Learning Python")
-- **Modules/Units**: Organized learning modules (e.g., "Python Basics", "Data Structures", "Web Development")
+#### 4.2.2 Course Structure and Hierarchy
+The platform supports hierarchical course structures to accommodate comprehensive educational programs:
+
+- **Parent Courses (Programs)**: Top-level courses that serve as containers for related subcourses (e.g., "Python Programming" program containing 7 subcourses)
+- **Subcourses**: Courses that belong to a parent course/program. Each subcourse is a complete course with its own modules, lessons, and content
+- **Standalone Courses**: Courses that exist independently without a parent course (traditional single courses)
+- **Modules/Units**: Organized learning modules within a course (e.g., "Python Basics", "Data Structures", "Web Development")
 - **Lessons**: Individual lessons within modules
 - **Assignments**: Graded assignments and projects
 - **Exercises**: Practice exercises after lessons
 - **Quizzes/Exams**: Assessment quizzes and examinations
 - **Projects**: Capstone projects for practical application
 - **Resources**: Supplementary materials (files, links, videos)
+
+**Course Hierarchy Model**:
+- Courses can have a parent course (self-referencing relationship)
+- A parent course can contain multiple subcourses
+- Subcourses maintain all standard course features (enrollment, modules, lessons, progress tracking, etc.)
+- Students can enroll in either:
+  - The parent course (which provides access to all subcourses)
+  - Individual subcourses (standalone enrollment)
+- Parent courses can optionally have their own content (overview, introduction, resources) in addition to subcourses
+- Course categories remain separate for taxonomy/organization purposes (e.g., "Programming", "Data Science", "Web Development")
+
+**Example Structure**:
+- **Python Programming** (Parent Course/Program)
+  - Course 1: Python Fundamentals (Subcourse)
+    - Module 1: Introduction to Python
+    - Module 2: Variables and Data Types
+    - ...
+  - Course 2: Intermediate Python (Subcourse)
+    - Module 1: Functions and Modules
+    - Module 2: Object-Oriented Programming
+    - ...
+  - Course 3: Advanced Python (Subcourse)
+  - ... (up to 7 subcourses)
 
 #### 4.2.3 Content Types
 - Rich text content with formatting
@@ -144,7 +177,25 @@ MySQL/MariaDB database will store:
 
 #### 4.2.4 Content Hierarchy
 ```
-Program/Course (e.g., "Learning Python")
+Parent Course/Program (e.g., "Python Programming") [Optional - can contain subcourses]
+  ├── Course Information (syllabus, objectives, prerequisites)
+  ├── Subcourses (e.g., "Python Fundamentals", "Intermediate Python", etc.)
+  │   └── Course (Subcourse)
+  │       ├── Course Information (syllabus, objectives, prerequisites)
+  │       ├── Module/Unit
+  │       │   └── Lesson
+  │       │       ├── Content (text, examples, videos)
+  │       │       ├── Exercise (practice)
+  │       │       └── Quiz (assessment)
+  │       ├── Assignment (graded work)
+  │       ├── Project (capstone)
+  │       └── Resources (supplementary materials)
+  ├── Program-level Resources (shared resources across all subcourses)
+  └── Program-level Projects (capstone projects spanning multiple subcourses)
+
+OR
+
+Standalone Course (no parent course)
   ├── Course Information (syllabus, objectives, prerequisites)
   ├── Module/Unit
   │   └── Lesson
@@ -172,6 +223,12 @@ Program/Course (e.g., "Learning Python")
   - No capacity limits - unlimited students per course
   - One-click enrollment from course catalog
   - Automatic enrollment confirmation
+- **Enrollment for Hierarchical Courses**:
+  - Students can enroll in parent courses (programs) which may provide access to all subcourses
+  - Students can also enroll directly in individual subcourses (standalone enrollment)
+  - Parent course enrollment can optionally auto-enroll students in all subcourses (configurable per parent course)
+  - Progress tracking works independently for parent courses and subcourses
+  - Students can view overall progress across a parent course program
 - **Optional Restricted Enrollment** (for specific courses):
   - Instructor/admin approval workflow for restricted courses
   - Enrollment period management (start/end dates)
@@ -205,15 +262,20 @@ Program/Course (e.g., "Learning Python")
 - Collaborative coding (optional, future enhancement)
 
 #### 4.4.2 Progress Tracking
-- Lesson completion status per course
+- Lesson completion status per course (works for both parent courses and subcourses)
 - Exercise and assignment submission history
 - Quiz/exam scores and attempts
 - Overall course progress percentage
-- Program-level progress tracking
+  - For subcourses: Progress calculated within the subcourse
+  - For parent courses: Aggregated progress across all subcourses
+- Program-level progress tracking (parent course with subcourses)
+  - Overall program completion percentage
+  - Individual subcourse progress within the program
+  - Cross-subcourse learning path tracking
 - Time tracking per lesson/module/course
 - Bookmarking/favorites for lessons
 - Learning path completion status
-- Last accessed position tracking
+- Last accessed position tracking (maintained per course, including subcourses)
 
 #### 4.4.3 Assessment System
 - Multiple question types:
@@ -513,13 +575,15 @@ Program/Course (e.g., "Learning Python")
 - `user_sessions` - Active user sessions
 
 #### Course Management
-- `programs` - Top-level programs (e.g., "Learning Python")
-- `courses` - Course/program information
-- `course_categories` - Course categorization
+- `courses` - Course/program information (supports hierarchical structure via self-referencing)
+  - `parent_course_id` - Foreign key to `courses.id` for subcourse relationships (NULL for standalone or parent courses)
+  - Parent courses can contain multiple subcourses
+  - Subcourses can have their own modules, lessons, and content
+- `course_categories` - Course categorization (for taxonomy/organization, separate from hierarchy)
 - `course_prerequisites` - Course prerequisite relationships
 - `course_instructors` - Course-instructor assignments
-- `modules` - Course modules/units
-- `lessons` - Individual lessons
+- `modules` - Course modules/units (belong to a specific course)
+- `lessons` - Individual lessons (belong to a module within a course)
 - `lesson_content` - Lesson content (text, media references)
 - `resources` - Supplementary course resources
 
@@ -581,13 +645,17 @@ Program/Course (e.g., "Learning Python")
 - `coupons` - Discount coupons
 
 ### Database Relationships
-- Users can enroll in multiple courses
+- **Course Hierarchy**: Courses can have a parent course (`courses.parent_course_id` references `courses.id`)
+  - Parent courses can contain multiple subcourses
+  - Subcourses maintain all standard course relationships (modules, lessons, enrollments, etc.)
+  - Both parent courses and subcourses can be enrolled in independently
+- Users can enroll in multiple courses (both parent courses and subcourses)
 - Courses contain multiple modules
 - Modules contain multiple lessons
 - Lessons can have exercises, quizzes, and assignments
 - Users can submit assignments, code, and quizzes
 - Grades are linked to submissions and gradebook items
-- Certificates are awarded upon course completion
+- Certificates are awarded upon course completion (can be awarded for both parent courses and subcourses)
 - Messages and discussions link users and courses
 
 ## 7. User Roles and Permissions

@@ -77,9 +77,13 @@
         <div class="card shadow-sm mb-4 fade-in-up">
             <div class="card-body p-4">
                 <div class="lesson-content">
-                    <?php if (!empty($lesson['content'])): ?>
+                    <?php if (!empty($lesson['content_html']) || !empty($lesson['content'])): ?>
                         <div class="content-section mb-4">
-                            <?= $lesson['content'] ?>
+                            <?php 
+                            // Use parsed HTML if available (from Markdown), otherwise use raw content (HTML)
+                            // content_html is already parsed and safe HTML, so we output it directly
+                            echo $lesson['content_html'] ?? $lesson['content'] ?? '';
+                            ?>
                         </div>
                     <?php else: ?>
                         <div class="alert alert-warning">

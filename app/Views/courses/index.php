@@ -85,7 +85,14 @@
                             </div>
                             <h5 class="card-title"><?= esc($course['title']) ?></h5>
                             <p class="card-text text-muted flex-grow-1">
-                                <?= esc(character_limiter($course['description'] ?? '', 100)) ?>
+                                <?php 
+                                $description = $course['description'] ?? '';
+                                $maxLength = 100;
+                                if (mb_strlen($description) > $maxLength) {
+                                    $description = mb_substr($description, 0, $maxLength) . '...';
+                                }
+                                echo esc($description);
+                                ?>
                             </p>
                             <div class="mt-auto">
                                 <a href="<?= base_url('courses/' . $course['slug']) ?>" class="btn btn-primary w-100">

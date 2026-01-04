@@ -29,4 +29,16 @@ class Services extends BaseService
      *     return new \CodeIgniter\Example();
      * }
      */
+
+    /**
+     * Markdown Service
+     */
+    public static function markdown($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('markdown');
+        }
+
+        return new \App\Libraries\MarkdownService();
+    }
 }

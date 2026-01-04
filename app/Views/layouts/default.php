@@ -3,8 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Free online learning platform with interactive lessons and courses. Learn any subject at your own pace - from programming to any topic you want to master.">
-    <title><?= esc($title ?? 'bandhanhara learning') ?></title>
+    
+    <?php
+    // Default SEO values
+    $siteName = 'Bandhanhara Learning';
+    $siteDescription = 'Free online learning platform with interactive lessons and courses. Learn Python, JavaScript, and other programming languages at your own pace.';
+    $siteUrl = base_url();
+    
+    // Get SEO data from view data
+    $pageTitle = $seo['title'] ?? $title ?? $siteName;
+    $pageDescription = $seo['description'] ?? $siteDescription;
+    $pageKeywords = $seo['keywords'] ?? 'online learning, free courses, programming, Python, JavaScript, web development, coding tutorials';
+    $pageImage = $seo['image'] ?? base_url('logo.png');
+    $pageUrl = $seo['url'] ?? current_url();
+    $pageType = $seo['type'] ?? 'website';
+    
+    // Construct full title
+    $fullTitle = $pageTitle === $siteName ? $siteName : $pageTitle . ' | ' . $siteName;
+    ?>
+    
+    <!-- Primary Meta Tags -->
+    <title><?= esc($fullTitle) ?></title>
+    <meta name="title" content="<?= esc($fullTitle) ?>">
+    <meta name="description" content="<?= esc($pageDescription) ?>">
+    <meta name="keywords" content="<?= esc($pageKeywords) ?>">
+    <meta name="author" content="<?= esc($siteName) ?>">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="<?= esc($pageType) ?>">
+    <meta property="og:url" content="<?= esc($pageUrl) ?>">
+    <meta property="og:title" content="<?= esc($fullTitle) ?>">
+    <meta property="og:description" content="<?= esc($pageDescription) ?>">
+    <meta property="og:image" content="<?= esc($pageImage) ?>">
+    <meta property="og:site_name" content="<?= esc($siteName) ?>">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="<?= esc($pageUrl) ?>">
+    <meta name="twitter:title" content="<?= esc($fullTitle) ?>">
+    <meta name="twitter:description" content="<?= esc($pageDescription) ?>">
+    <meta name="twitter:image" content="<?= esc($pageImage) ?>">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="<?= esc($pageUrl) ?>">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="<?= base_url('logo.png') ?>">
+    
+    <!-- Stylesheets -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>">
@@ -132,7 +182,7 @@
         <?php endif; ?>
     </main>
 
-    <footer class="bg-dark text-light mt-5">
+    <footer class="bg-dark text-light">
         <div class="container py-4">
             <div class="row">
                 <div class="col-md-6">

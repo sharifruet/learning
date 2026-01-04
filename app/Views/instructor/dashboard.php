@@ -112,7 +112,14 @@
                                     <td class="ps-4">
                                         <strong><?= esc($course['title']) ?></strong>
                                         <br>
-                                        <small class="text-muted"><?= esc(character_limiter($course['description'] ?? '', 60)) ?></small>
+                                        <small class="text-muted"><?php 
+                                        $desc = $course['description'] ?? '';
+                                        $maxLen = 60;
+                                        if (mb_strlen($desc) > $maxLen) {
+                                            $desc = mb_substr($desc, 0, $maxLen) . '...';
+                                        }
+                                        echo esc($desc);
+                                        ?></small>
                                     </td>
                                     <td>
                                         <span class="badge bg-<?= $course['status'] === 'published' ? 'success' : 'secondary' ?>">

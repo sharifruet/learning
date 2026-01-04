@@ -1,0 +1,43 @@
+# Root-level .htaccess for FastComet deployment
+# 
+# IMPORTANT: Use this file ONLY if you CANNOT change the document root to public/
+# 
+# If you CAN change the document root:
+#   - Set document root to: public_html/public
+#   - Use public/.htaccess (already included)
+#   - DELETE or ignore this root-level .htaccess
+#
+# If you CANNOT change the document root:
+#   - Keep document root as: public_html/
+#   - Use this root-level .htaccess file
+#   - This file redirects requests to public/ directory
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Redirect all requests to the public directory
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Prevent access to sensitive files and directories (security)
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Block direct access to application directories
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} ^/(app|writable|vendor|system|tests)/
+    RewriteRule ^(.*)$ - [F,L]
+</IfModule>
+
+# Additional security: Block access to .env and other sensitive files
+<FilesMatch "^(\.env|composer\.(json|lock)|package\.json|\.gitignore)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+

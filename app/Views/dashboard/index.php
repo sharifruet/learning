@@ -167,7 +167,14 @@
                                 </div>
                                 <h5 class="card-title"><?= esc($course['title']) ?></h5>
                                 <p class="card-text text-muted flex-grow-1">
-                                    <?= esc(character_limiter($course['description'] ?? '', 100)) ?>
+                                    <?php 
+                                    $desc = $course['description'] ?? '';
+                                    $maxLen = 100;
+                                    if (mb_strlen($desc) > $maxLen) {
+                                        $desc = mb_substr($desc, 0, $maxLen) . '...';
+                                    }
+                                    echo esc($desc);
+                                    ?>
                                 </p>
                                 
                                 <!-- Progress Bar -->
@@ -241,7 +248,14 @@
                                 </div>
                                 <h5 class="card-title"><?= esc($course['title']) ?></h5>
                                 <p class="card-text text-muted flex-grow-1">
-                                    <?= esc(character_limiter($course['description'] ?? '', 100)) ?>
+                                    <?php 
+                                    $desc = $course['description'] ?? '';
+                                    $maxLen = 100;
+                                    if (mb_strlen($desc) > $maxLen) {
+                                        $desc = mb_substr($desc, 0, $maxLen) . '...';
+                                    }
+                                    echo esc($desc);
+                                    ?>
                                 </p>
                                 <div class="mt-auto">
                                     <a href="<?= base_url('courses/' . $course['slug']) ?>" class="btn btn-outline-primary w-100">

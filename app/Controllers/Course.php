@@ -32,6 +32,15 @@ class Course extends BaseController
         $data['categories'] = $categoryModel->getAllCategories();
         $data['current_filters'] = $filters;
         
+        // SEO data
+        $data['seo'] = [
+            'title' => 'All Courses - Browse Free Online Courses',
+            'description' => 'Browse our comprehensive catalog of free online courses. Learn Python, JavaScript, web development, and more. All courses are free, self-paced, and include interactive lessons.',
+            'keywords' => 'free courses, online courses, programming courses, Python courses, JavaScript courses, web development courses, coding tutorials',
+            'url' => base_url('courses'),
+            'type' => 'website'
+        ];
+        
         return $this->render('courses/index', $data);
     }
 
@@ -48,6 +57,11 @@ class Course extends BaseController
         }
         
         $courseId = $course['id'];
+        
+        // Check if this is a parent course (has subcourses)
+        $subcourses = $courseModel->getSubcoursesWithDetails($courseId);
+        $isParentCourse = !empty($subcourses);
+        
         $userId = session()->get('user_id');
         $isEnrolled = false;
         $enrollment = null;
@@ -64,14 +78,15 @@ class Course extends BaseController
         
         // Get user progress if enrolled
         $progress = null;
-        if ($isEnrolled && $enrollment) {
+        if ($isEnrolled && $enrollment && !$isParentCourse) {
+            // Only calculate progress for non-parent courses
             $progressModel = new UserProgressModel();
             $completedLessons = $progressModel->where('user_id', $userId)
                                             ->where('course_id', $courseId)
                                             ->where('status', 'completed')
                                             ->countAllResults();
             
-            // Calculate progress percentage (simplified - will be enhanced in Phase 1.4)
+            // Calculate progress percentage
             $totalLessons = 0;
             if (!empty($course['modules'])) {
                 foreach ($course['modules'] as $module) {
@@ -88,11 +103,28 @@ class Course extends BaseController
             ];
         }
         
+        // For free courses, allow access without enrollment
+        $canAccess = $isEnrolled || (isset($course['is_free']) && $course['is_free']);
+        
         $data['course'] = $course;
         $data['isEnrolled'] = $isEnrolled;
+        $data['canAccess'] = $canAccess;
         $data['enrollment'] = $enrollment;
         $data['enrollmentCount'] = $enrollmentCount;
         $data['progress'] = $progress;
+        $data['subcourses'] = $subcourses;
+        $data['isParentCourse'] = $isParentCourse;
+        
+        // SEO data
+        $courseDescription = !empty($course['description']) ? $course['description'] : 'Learn ' . $course['title'] . ' with our comprehensive free online course.';
+        $data['seo'] = [
+            'title' => $course['title'],
+            'description' => $courseDescription . (isset($enrollmentCount) && $enrollmentCount > 0 ? ' Join ' . $enrollmentCount . ' students learning this course.' : ''),
+            'keywords' => $course['title'] . ', online course, free course, ' . $course['difficulty'] . ' programming, learn ' . $course['title'],
+            'url' => base_url('courses/' . $course['slug']),
+            'type' => 'article',
+            'image' => !empty($course['image']) ? base_url($course['image']) : base_url('logo.png')
+        ];
         
         return $this->render('courses/view', $data);
     }
@@ -131,6 +163,17 @@ class Course extends BaseController
         $data['course'] = $course;
         $data['module'] = $module;
         $data['completed_lessons'] = $completedLessons;
+        
+        // SEO data
+        $moduleDescription = !empty($module['description']) ? $module['description'] : 'Learn ' . $module['title'] . ' - Part of the ' . $course['title'] . ' course.';
+        $data['seo'] = [
+            'title' => $module['title'] . ' - ' . $course['title'],
+            'description' => $moduleDescription . ' Free online module with interactive lessons and exercises.',
+            'keywords' => $module['title'] . ', ' . $course['title'] . ', online module, free tutorial, programming module',
+            'url' => base_url('courses/' . $courseSlug . '/module/' . $moduleId),
+            'type' => 'article',
+            'image' => !empty($course['image']) ? base_url($course['image']) : base_url('logo.png')
+        ];
         
         return $this->render('courses/module', $data);
     }

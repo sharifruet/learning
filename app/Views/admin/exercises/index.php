@@ -48,7 +48,14 @@
                                     <td class="ps-4 fw-semibold"><?= esc($exercise['title']) ?></td>
                                     <td>
                                         <?php if (!empty($exercise['description'])): ?>
-                                            <?= esc(character_limiter($exercise['description'], 100)) ?>
+                                            <?php 
+                                            $desc = $exercise['description'];
+                                            $maxLen = 100;
+                                            if (mb_strlen($desc) > $maxLen) {
+                                                $desc = mb_substr($desc, 0, $maxLen) . '...';
+                                            }
+                                            echo esc($desc);
+                                            ?>
                                         <?php else: ?>
                                             <span class="text-muted">No description</span>
                                         <?php endif; ?>
